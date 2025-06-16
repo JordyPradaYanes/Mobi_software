@@ -276,6 +276,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.router.navigate(["/register"])
   }
 
+  // Navegar a la página principal
+  navigateToHome(): void {
+    this.router.navigate(["/"])
+  }
+
   // Obtener texto del botón según el estado
   getButtonText(): string {
     if (this.isLoading) return this.currentLoadingMessage

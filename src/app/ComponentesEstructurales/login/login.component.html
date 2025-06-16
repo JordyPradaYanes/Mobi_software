@@ -54,6 +54,20 @@
           </div>
         </div>
 
+        <!-- Botón de regresar -->
+        <div *ngIf="!loginSuccess && !isLoading" class="mb-6">
+          <button
+            type="button"
+            (click)="navigateToHome()"
+            class="inline-flex items-center text-gray-600 hover:text-indigo-600 transition-colors duration-200 group"
+          >
+            <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            <span class="text-sm font-medium">Volver al inicio</span>
+          </button>
+        </div>
+
         <!-- Header (oculto durante estados de éxito o carga) -->
         <div *ngIf="!loginSuccess && !isLoading" class="text-center mb-8">
           <h2 class="text-2xl font-bold text-gray-800 mb-2">Iniciar Sesión</h2>
