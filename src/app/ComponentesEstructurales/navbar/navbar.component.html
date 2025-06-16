@@ -1,0 +1,100 @@
+<nav class="fixed z-50 w-full bg-white shadow-sm">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <a routerLink="/" class="flex items-center">
+            <div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+              </svg>
+            </div>
+            <span class="font-bold text-lg" [ngStyle]="{'color': colors.textDark}">Mobi</span>
+          </a>
+        </div>
+  
+        <!-- Nav Links - Desktop -->
+        <div class="hidden md:flex space-x-8">
+          <a *ngFor="let link of navLinks" 
+             [routerLink]="link.url" 
+             class="text-sm font-medium hover:text-indigo-600 transition-colors flex items-center" 
+             [ngStyle]="{'color': colors.textDark}">
+            <span>{{ link.name }}</span>
+            <svg *ngIf="link.hasIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </a>
+        </div>
+  
+        <!-- Auth Buttons - Desktop -->
+        <div class="hidden md:flex items-center space-x-4">
+          <!-- Mostrar cuando NO está autenticado -->
+          <ng-container *ngIf="!currentUser">
+            <a routerLink="/login" class="text-sm font-medium hover:text-indigo-600 transition-colors" [ngStyle]="{'color': colors.textDark}">
+              Iniciar sesión
+            </a>
+            <a routerLink="/register" class="text-sm font-medium bg-indigo-500 hover:bg-indigo-600 px-4 py-2 rounded-md transition-colors" [ngStyle]="{'color': colors.buttonText}">
+              Registrarse
+            </a>
+          </ng-container>
+          
+          <!-- Mostrar cuando SÍ está autenticado -->
+          <ng-container *ngIf="currentUser">
+            <span class="text-sm font-medium" [ngStyle]="{'color': colors.textDark}">
+              Hola, {{ getUserDisplayName() }}
+            </span>
+            <button (click)="logout()" class="text-sm font-medium bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md transition-colors text-white">
+              Cerrar sesión
+            </button>
+          </ng-container>
+        </div>
+  
+        <!-- Mobile menu button -->
+        <div class="md:hidden">
+          <button (click)="toggleMobileMenu()" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path *ngIf="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              <path *ngIf="isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mobile menu, show/hide based on menu state -->
+    <div *ngIf="isMobileMenuOpen" class="h-auto md:hidden bg-white shadow-lg">
+      <div class="container mx-auto px-4 py-4 space-y-3">
+        <a *ngFor="let link of navLinks" 
+           [routerLink]="link.url" 
+           class="flex text-base font-medium hover:text-indigo-600 transition-colors items-center justify-center py-2" 
+           [ngStyle]="{'color': colors.textDark}">
+          <span>{{ link.name }}</span>
+          <svg *ngIf="link.hasIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </a>
+        
+        <div class="pt-4 flex flex-col space-y-3">
+          <!-- Mostrar cuando NO está autenticado -->
+          <ng-container *ngIf="!currentUser">
+            <a routerLink="/login" class="block text-center text-base font-medium hover:text-indigo-600 transition-colors py-2" [ngStyle]="{'color': colors.textDark}">
+              Iniciar sesión
+            </a>
+            <a routerLink="/register" class="block text-center text-base font-medium bg-indigo-500 hover:bg-indigo-600 px-4 py-2 rounded-md transition-colors" [ngStyle]="{'color': colors.buttonText}">
+              Registrarse
+            </a>
+          </ng-container>
+          
+          <!-- Mostrar cuando SÍ está autenticado -->
+          <ng-container *ngIf="currentUser">
+            <span class="block text-center text-base font-medium py-2" [ngStyle]="{'color': colors.textDark}">
+              Hola, {{ getUserDisplayName() }}
+            </span>
+            <button (click)="logout()" class="block w-full text-center text-base font-medium bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md transition-colors text-white">
+              Cerrar sesión
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+</nav>

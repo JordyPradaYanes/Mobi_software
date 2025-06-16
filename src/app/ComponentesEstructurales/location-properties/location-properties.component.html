@@ -1,0 +1,392 @@
+<div class="bg-gray-50 py-8 mt-5 rounded">
+  <div class="container mx-auto px-4 max-w-6xl">
+    <!-- Título de la sección -->
+    <div class="text-center mb-8">
+      <h2
+        class="text-4xl font-bold mb-2"
+        [ngStyle]="{ color: colors.secondary }"
+      >
+        Según tu ubicación
+      </h2>
+      <p class="text-sm" [ngStyle]="{ color: colors.textLight }">
+        Explora las mejores propiedades entre la costa y montaña que se adaptan
+        a tu estilo
+      </p>
+    </div>
+
+    <!-- Botones de navegación funcionales -->
+    <div class="flex flex-wrap gap-2 mb-6">
+      <button
+        (click)="setFilter('alquiler')"
+        [class]="activeFilter === 'alquiler' 
+          ? 'bg-indigo-100 text-indigo-700 border-indigo-200' 
+          : 'text-gray-700 bg-white border-gray-200'"
+        class="px-5 py-2 rounded-md flex items-center text-sm font-medium border transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 mr-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+          />
+        </svg>
+        Alquilar ({{ getPropertyCount('alquiler') }})
+      </button>
+      
+      <button
+        (click)="setFilter('venta')"
+        [class]="activeFilter === 'venta' 
+          ? 'bg-indigo-100 text-indigo-700 border-indigo-200' 
+          : 'text-gray-700 bg-white border-gray-200'"
+        class="px-5 py-2 rounded-md flex items-center text-sm font-medium border transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 mr-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+          />
+        </svg>
+        Venta ({{ getPropertyCount('venta') }})
+      </button>
+      
+      <button
+        (click)="setFilter('todos')"
+        [class]="activeFilter === 'todos' 
+          ? 'bg-indigo-100 text-indigo-700 border-indigo-200' 
+          : 'text-gray-700 bg-white border-gray-200'"
+        class="px-5 py-2 rounded-md flex items-center text-sm font-medium border transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 mr-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 7l4-4m0 0l4 4m-4-4v18"
+          />
+        </svg>
+        Todos ({{ getPropertyCount('todos') }})
+      </button>
+    </div>
+
+    <!-- Buscador funcional -->
+    <div class="mb-6">
+      <div class="relative">
+        <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+          <svg
+            class="w-5 h-5 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            ></path>
+          </svg>
+        </div>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Buscar por nombre o ubicación..."
+          class="w-full py-3 pl-12 pr-4 border rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          [ngStyle]="{ 'border-color': colors.border }"
+        />
+      </div>
+    </div>
+
+    <!-- Filtros avanzados -->
+    <div class="bg-white p-4 rounded-lg shadow-sm mb-6">
+      <h3 class="text-lg font-semibold mb-4 text-gray-800">Filtros avanzados</h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Filtro de habitaciones -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Habitaciones</label>
+          <div class="flex space-x-2">
+            <input
+              type="number"
+              [(ngModel)]="minBeds"
+              placeholder="Min"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+            <input
+              type="number"
+              [(ngModel)]="maxBeds"
+              placeholder="Max"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+        </div>
+
+        <!-- Filtro de baños -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Baños</label>
+          <div class="flex space-x-2">
+            <input
+              type="number"
+              [(ngModel)]="minBaths"
+              placeholder="Min"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+            <input
+              type="number"
+              [(ngModel)]="maxBaths"
+              placeholder="Max"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+        </div>
+
+        <!-- Filtro de área -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Área (m²)</label>
+          <div class="flex space-x-2">
+            <input
+              type="number"
+              [(ngModel)]="minArea"
+              placeholder="Min"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+            <input
+              type="number"
+              [(ngModel)]="maxArea"
+              placeholder="Max"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+        </div>
+
+        <!-- Filtro de precio -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Precio ($)</label>
+          <div class="flex space-x-2">
+            <input
+              type="number"
+              [(ngModel)]="minPrice"
+              placeholder="Min"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+            <input
+              type="number"
+              [(ngModel)]="maxPrice"
+              placeholder="Max"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón para limpiar filtros -->
+      <div class="mt-4">
+        <button
+          (click)="clearFilters()"
+          class="px-4 py-2 text-sm text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+        >
+          Limpiar filtros
+        </button>
+      </div>
+    </div>
+
+    <!-- Contador de resultados -->
+    <div class="mb-4">
+      <p class="text-sm text-gray-600">
+        Mostrando {{ filteredProperties.length }} de {{ properties.length }} propiedades
+      </p>
+    </div>
+
+    <!-- Grid de propiedades filtradas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Mensaje cuando no hay resultados -->
+      <div *ngIf="filteredProperties.length === 0" class="col-span-full text-center py-8">
+        <div class="text-gray-400 mb-4">
+          <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </div>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No se encontraron propiedades</h3>
+        <p class="text-gray-500 mb-4">Intenta ajustar tus filtros de búsqueda</p>
+        <button
+          (click)="clearFilters()"
+          class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+        >
+          Limpiar filtros
+        </button>
+      </div>
+
+      <!-- Propiedad Card -->
+      <div
+        *ngFor="let property of filteredProperties"
+        class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+      >
+        <!-- Imagen de la propiedad -->
+        <div class="relative">
+          <img
+            [src]="property.imgSrc"
+            [alt]="property.title"
+            class="w-full h-48 object-cover"
+          />
+
+          <!-- Etiqueta Popular -->
+          <div
+            *ngIf="property.isPopular"
+            class="absolute top-3 left-3 bg-indigo-600 text-white text-xs px-3 py-1 rounded-md flex items-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3 mr-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
+            </svg>
+            POPULAR
+          </div>
+
+          <!-- Etiqueta de tipo -->
+          <div class="absolute top-3 right-12 px-2 py-1 rounded-md text-xs font-medium"
+               [class]="property.type === 'venta' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'">
+            {{ property.type === 'venta' ? 'VENTA' : 'ALQUILER' }}
+          </div>
+
+          <!-- Botón de favorito -->
+          <button
+            (click)="toggleFavorite(property)"
+            class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"
+            [ngStyle]="{
+              color: property.isFavorite
+                ? colors.favoriteActive
+                : colors.textLight
+            }"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                [attr.d]="
+                  property.isFavorite
+                    ? 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'
+                    : 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'
+                "
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Información de la propiedad -->
+        <div class="p-4">
+          <!-- Precio -->
+          <div class="flex justify-between items-center mb-2">
+            <div class="flex items-end">
+              <span class="text-indigo-600 font-bold text-xl">{{
+                formatPrice(property.price)
+              }}</span>
+              <span class="text-gray-500 text-sm ml-1"
+                >/{{ property.rentType }}</span
+              >
+            </div>
+          </div>
+
+          <!-- Nombre y ubicación -->
+          <h3 class="font-bold text-gray-800 mb-1">{{ property.title }}</h3>
+          <p class="text-gray-500 text-sm mb-3">{{ property.location }}</p>
+
+          <!-- Características -->
+          <div class="flex items-center text-sm text-gray-500 space-x-4">
+            <div class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 mr-1 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2H5z"
+                />
+              </svg>
+              <span>{{ property.beds }} Hab.</span>
+            </div>
+            <div class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 mr-1 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V5c0-1.1.9-2 2-2h4a2 2 0 012 2v2m-6 0h6M5 21V10c0-1.1.9-2 2-2h10a2 2 0 012 2v11m-4-6v3m0 0v3m0-3h3m-3 0h-3"
+                />
+              </svg>
+              <span>{{ property.baths }} Baños</span>
+            </div>
+            <div class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 mr-1 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"
+                />
+              </svg>
+              <span>{{ property.area }} {{ property.areaUnit }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón para ver más -->
+    <div class="text-center mt-8" *ngIf="filteredProperties.length > 0">
+      <a href="/login" class="px-6 cursor-pointer py-3 rounded-md font-medium text-white transition-colors hover:opacity-90"
+              [ngStyle]="{'background-color': colors.accent}">
+        Descubre más propiedades
+      </a>
+    </div>
+  </div>
+</div>

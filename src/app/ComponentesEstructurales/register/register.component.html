@@ -1,0 +1,318 @@
+<div class="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-indigo-600 flex items-center justify-center p-4">
+  <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden max-w-4xl w-full grid md:grid-cols-2 min-h-[600px]">
+    
+    <!-- Sección de imagen/ilustración -->
+    <div class="bg-gradient-to-br from-indigo-600 to-purple-700 flex items-center justify-center p-8 relative overflow-hidden">
+      <div class="text-center text-white z-10">
+        <!-- Logo circular -->
+        <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+          </svg>
+        </div>
+        <h2 class="text-3xl font-bold mb-4">Mobi</h2>
+        <p class="text-lg opacity-90 mb-8">Bienvenido a tu nueva experiencia</p>
+        
+        <!-- Decoración -->
+        <div class="absolute top-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+        <div class="absolute bottom-10 left-10 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+        <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-white/5 rounded-full blur-lg"></div>
+      </div>
+    </div>
+
+    <!-- Sección del formulario -->
+    <div class="p-8 flex flex-col justify-center">
+      <div class="max-w-sm mx-auto w-full">
+        
+        <!-- Mensaje de éxito con animación -->
+        <div *ngIf="registrationSuccess" class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg animate-fade-in">
+          <div class="flex items-center">
+            <svg class="w-6 h-6 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div>
+              <h3 class="text-green-800 font-medium">¡Registro exitoso!</h3>
+              <p class="text-green-700 text-sm mt-1">{{ successMessage }}</p>
+              <p class="text-green-600 text-xs mt-2">Redirigiendo al login en {{ redirectCountdown }} segundos...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estados de carga con diferentes mensajes -->
+        <div *ngIf="isLoading" class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg animate-pulse">
+          <div class="flex items-center">
+            <svg class="animate-spin h-6 w-6 text-blue-600 mr-3" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <div>
+              <p class="text-blue-800 font-medium">{{ currentLoadingMessage }}</p>
+              <div class="w-full bg-blue-200 rounded-full h-1 mt-2">
+                <div class="bg-blue-600 h-1 rounded-full transition-all duration-500" [style.width]="loadingProgress + '%'"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header (oculto durante estados de éxito o carga) -->
+        <div *ngIf="!registrationSuccess && !isLoading" class="text-center mb-8">
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">Crea tu cuenta</h2>
+          <p class="text-gray-600 text-sm">
+            ¿Ya tienes cuenta? 
+            <a routerLink="/login" class="text-indigo-600 hover:text-indigo-500 font-medium">
+              Inicia Sesión
+            </a>
+          </p>
+        </div>
+
+        <!-- Mensaje de error -->
+        <div *ngIf="errorMessage && !isLoading" class="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm animate-shake">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            {{ errorMessage }}
+          </div>
+        </div>
+
+        <!-- Formulario (oculto durante éxito pero visible durante carga) -->
+        <form *ngIf="!registrationSuccess" [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4" [class.opacity-50]="isLoading" [class.pointer-events-none]="isLoading">
+          
+          <!-- Nombre completo -->
+          <div class="form-group">
+            <input
+              id="fullName"
+              type="text"
+              formControlName="fullName"
+              placeholder="Nombre completo"
+              class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-sm"
+              [class.border-red-300]="hasError('fullName')"
+              [class.bg-red-50]="hasError('fullName')"
+              [class.border-green-300]="!hasError('fullName') && registerForm.get('fullName')?.value && registerForm.get('fullName')?.valid"
+              [class.bg-green-50]="!hasError('fullName') && registerForm.get('fullName')?.value && registerForm.get('fullName')?.valid"
+            />
+            <p *ngIf="hasError('fullName')" class="mt-1 text-xs text-red-600">
+              {{ getFieldError('fullName') }}
+            </p>
+            <p *ngIf="!hasError('fullName') && registerForm.get('fullName')?.value && registerForm.get('fullName')?.valid" class="mt-1 text-xs text-green-600">
+              ✓ Nombre completo válido
+            </p>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="Correo electrónico"
+              class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-sm"
+              [class.border-red-300]="hasError('email')"
+              [class.bg-red-50]="hasError('email')"
+              [class.border-green-300]="!hasError('email') && registerForm.get('email')?.value && registerForm.get('email')?.valid"
+              [class.bg-green-50]="!hasError('email') && registerForm.get('email')?.value && registerForm.get('email')?.valid"
+              [class.border-yellow-300]="checkingEmail"
+              [class.bg-yellow-50]="checkingEmail"
+            />
+            
+            <!-- Indicador de verificación de email -->
+            <div *ngIf="checkingEmail" class="mt-1 flex items-center text-xs text-yellow-600">
+              <svg class="animate-spin h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Verificando disponibilidad...
+            </div>
+
+            <p *ngIf="hasError('email')" class="mt-1 text-xs text-red-600">
+              {{ getFieldError('email') }}
+            </p>
+            <p *ngIf="!hasError('email') && !checkingEmail && registerForm.get('email')?.value && registerForm.get('email')?.valid" class="mt-1 text-xs text-green-600">
+              ✓ Email válido y disponible
+            </p>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="form-group">
+            <div class="relative">
+              <input
+                id="password"
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="Contraseña"
+                class="w-full px-4 py-3 pr-12 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-sm"
+                [class.border-red-300]="hasError('password')"
+                [class.bg-red-50]="hasError('password')"
+              />
+              <button
+                type="button"
+                (click)="togglePasswordVisibility()"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                <svg *ngIf="!showPassword" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <svg *ngIf="showPassword" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Indicador de fuerza de contraseña mejorado -->
+            <div *ngIf="registerForm.get('password')?.value" class="mt-2">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-medium" [style.color]="getPasswordStrengthColor()">
+                  Seguridad: {{ getPasswordStrength() }}
+                </span>
+                <span class="text-xs text-gray-500">{{ registerForm.get('password')?.value?.length || 0 }}/8+</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-1.5">
+                <div 
+                  class="h-1.5 rounded-full transition-all duration-300"
+                  [style.background-color]="getPasswordStrengthColor()"
+                  [style.width]="getPasswordStrengthPercentage() + '%'">
+                </div>
+              </div>
+              
+              <!-- Requisitos de contraseña -->
+              <div class="mt-2 grid grid-cols-2 gap-1 text-xs">
+                <div class="flex items-center" [class.text-green-600]="hasMinLength()" [class.text-gray-400]="!hasMinLength()">
+                  <span class="mr-1">{{ hasMinLength() ? '✓' : '○' }}</span>
+                  8+ caracteres
+                </div>
+                <div class="flex items-center" [class.text-green-600]="hasUppercase()" [class.text-gray-400]="!hasUppercase()">
+                  <span class="mr-1">{{ hasUppercase() ? '✓' : '○' }}</span>
+                  Mayúscula
+                </div>
+                <div class="flex items-center" [class.text-green-600]="hasLowercase()" [class.text-gray-400]="!hasLowercase()">
+                  <span class="mr-1">{{ hasLowercase() ? '✓' : '○' }}</span>
+                  Minúscula
+                </div>
+                <div class="flex items-center" [class.text-green-600]="hasNumber()" [class.text-gray-400]="!hasNumber()">
+                  <span class="mr-1">{{ hasNumber() ? '✓' : '○' }}</span>
+                  Número
+                </div>
+              </div>
+            </div>
+
+            <p *ngIf="hasError('password')" class="mt-1 text-xs text-red-600">
+              {{ getFieldError('password') }}
+            </p>
+          </div>
+
+          <!-- Confirmar contraseña -->
+          <div class="form-group">
+            <div class="relative">
+              <input
+                id="confirmPassword"
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                formControlName="confirmPassword"
+                placeholder="Confirma tu contraseña"
+                class="w-full px-4 py-3 pr-12 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-sm"
+                [class.border-red-300]="hasError('confirmPassword')"
+                [class.bg-red-50]="hasError('confirmPassword')"
+                [class.border-green-300]="!hasError('confirmPassword') && registerForm.get('confirmPassword')?.value && passwordsMatch()"
+                [class.bg-green-50]="!hasError('confirmPassword') && registerForm.get('confirmPassword')?.value && passwordsMatch()"
+              />
+              <button
+                type="button"
+                (click)="toggleConfirmPasswordVisibility()"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                <svg *ngIf="!showConfirmPassword" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <svg *ngIf="showConfirmPassword" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+                </svg>
+              </button>
+            </div>
+            <p *ngIf="hasError('confirmPassword')" class="mt-1 text-xs text-red-600">
+              {{ getFieldError('confirmPassword') }}
+            </p>
+            <p *ngIf="!hasError('confirmPassword') && registerForm.get('confirmPassword')?.value && passwordsMatch()" class="mt-1 text-xs text-green-600">
+              ✓ Las contraseñas coinciden
+            </p>
+          </div>
+
+          <!-- Términos y condiciones -->
+          <div class="flex items-start space-x-2">
+            <input
+              id="acceptTerms"
+              type="checkbox"
+              formControlName="acceptTerms"
+              class="mt-1 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            />
+            <label for="acceptTerms" class="text-xs text-gray-600 leading-relaxed">
+              Acepto los
+              <a routerLink="/terms" class="text-indigo-600 hover:text-indigo-500 font-medium">términos y condiciones</a>
+              y la
+              <a routerLink="/privacy" class="text-indigo-600 hover:text-indigo-500 font-medium">política de privacidad</a>
+            </label>
+          </div>
+          <p *ngIf="hasError('acceptTerms')" class="text-xs text-red-600">
+            Debes aceptar los términos y condiciones.
+          </p>
+
+          <!-- Botón de registro -->
+          <button
+            type="submit"
+            [disabled]="!registerForm.valid || isLoading || checkingEmail"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 transform hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <svg *ngIf="isLoading" class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>{{ getButtonText() }}</span>
+          </button>
+        </form>
+
+        <!-- Mensaje adicional durante la redirección -->
+        <div *ngIf="redirecting" class="mt-4 text-center">
+          <p class="text-sm text-gray-600">Preparando tu experiencia...</p>
+          <div class="mt-2 flex justify-center">
+            <div class="flex space-x-1">
+              <div class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></div>
+              <div class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+              <div class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group input:focus + .form-group label,
+.form-group input:valid + .form-group label {
+  transform: translateY(-20px) scale(0.9);
+  color: #6366f1;
+}
+</style>

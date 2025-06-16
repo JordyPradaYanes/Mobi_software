@@ -1,0 +1,180 @@
+<section
+  class="rounded"
+  [ngStyle]="{ 'background-color': colors.backgroundColor }"
+>
+  <div class="container mx-auto px-4 py-16 md:py-24">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+      <!-- Contenido de texto - lado izquierdo -->
+      <div class="md:col-span-6 z-10">
+        <h1
+          class="text-4xl md:text-5xl font-bold mb-4"
+          [ngStyle]="{ color: colors.textDark }"
+        >
+          Compra, alquila o<br />vende tu propiedad<br />fácilmente
+        </h1>
+
+        <p class="text-lg mb-8" [ngStyle]="{ color: colors.textLight }">
+          Una gran plataforma para comprar, vender o incluso alquilar tus
+          propiedades.
+        </p>
+
+        <!-- Pestañas de tipo de transacción -->
+        <div
+          class="flex border-b mb-6"
+          [ngStyle]="{ 'border-color': colors.borderColor }"
+        >
+          <button
+            *ngFor="let type of transactionTypes"
+            (click)="selectTransactionType(type.id)"
+            class="px-6 py-3 text-sm font-medium transition-colors"
+            [ngClass]="{
+              'border-b-2 border-indigo-500 text-indigo-600': type.selected,
+              'text-gray-500 hover:text-gray-700': !type.selected
+            }"
+          >
+            {{ type.name }}
+          </button>
+        </div>
+
+        <!-- Formulario de búsqueda -->
+        <div class="bg-white p-4 rounded-lg shadow-md mb-12">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Campo de ubicación -->
+            <div>
+              <label
+                class="block text-xs font-medium mb-1"
+                [ngStyle]="{ color: colors.textLight }"
+                >Ubicación</label
+              >
+              <input
+                type="text"
+                [(ngModel)]="location"
+                class="w-full p-2 border rounded text-sm"
+                [ngStyle]="{
+                  'border-color': colors.borderColor,
+                  color: colors.textDark
+                }"
+              />
+            </div>
+
+            <!-- Selector de tipo de propiedad -->
+            <div>
+              <label
+                class="block text-xs font-medium mb-1"
+                [ngStyle]="{ color: colors.textLight }"
+                >Tipo de propiedad</label
+              >
+              <div class="relative">
+                <select
+                  [(ngModel)]="propertyType"
+                  class="w-full p-2 border rounded appearance-none text-sm"
+                  [ngStyle]="{
+                    'border-color': colors.borderColor,
+                    color: colors.textDark
+                  }"
+                >
+                  <option>Seleccionar Propiedad</option>
+                  <option>Casa</option>
+                  <option>Apartamento</option>
+                  <option>Oficina</option>
+                  <option>Terreno</option>
+                  <option>Local Comercial</option>
+                </select>
+                <div
+                  class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+                >
+                  <svg
+                    class="w-4 h-4 text-gray-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botón de búsqueda -->
+            <a
+              href="/login"
+              class="w-full flex items-center justify-center py-2 cursor-pointer px-4 rounded font-medium text-white"
+              [ngStyle]="{ 'background-color': colors.primary }"
+            >
+              Buscar Propiedades
+            </a>
+          </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="flex flex-wrap gap-10">
+          <div *ngFor="let stat of statistics" class="flex items-center">
+            <div
+              class="w-10 h-10 rounded-full flex items-center justify-center mr-3"
+              [ngStyle]="{
+                'background-color':
+                  stat.id === 'rentals' ? '#eef2ff' : '#f0f9ff'
+              }"
+            >
+              <!-- Ícono para alquilados -->
+              <svg
+                *ngIf="stat.id === 'rentals'"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 text-indigo-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                />
+              </svg>
+              <!-- Ícono para propiedades -->
+              <svg
+                *ngIf="stat.id === 'properties'"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 text-blue-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                />
+              </svg>
+            </div>
+            <div>
+              <h4
+                class="font-bold text-lg"
+                [ngStyle]="{ color: colors.textDark }"
+              >
+                {{ stat.number }} {{ stat.title }}
+              </h4>
+              <p class="text-sm" [ngStyle]="{ color: colors.textLight }">
+                {{ stat.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imagen de la casa - lado derecho -->
+      <div class="md:col-span-6 hidden md:block">
+        <img
+          src="assets/images/house.jpeg"
+          alt="Imagen de casa"
+          class="w-full h-auto rounded-lg shadow-xl"
+        />
+      </div>
+    </div>
+  </div>
+</section>
