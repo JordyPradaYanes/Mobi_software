@@ -632,6 +632,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.showConfirmPassword = !this.showConfirmPassword
   }
 
+    // Navegar a la página principal
+  navigateToHome(): void {
+    this.router.navigate(["/"])
+  }
+
   // Obtener texto del botón según el estado
   getButtonText(): string {
     if (this.checkingEmail) return 'Verificando email...'
