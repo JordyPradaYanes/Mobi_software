@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common"
 import { Component, type OnInit, HostListener, type OnDestroy } from "@angular/core"
 import { RouterModule } from "@angular/router"
 import { AuthService } from "../../services/auth.service"
+import { UserService, UserProfile } from "../../services/user.service"
 import { Subscription } from "rxjs"
 import type { User } from "@angular/fire/auth"
 
@@ -22,6 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isScrolled = false
   isMobileMenuOpen = false
   currentUser: User | null = null
+  userProfile: UserProfile | null = null
   private userSubscription: Subscription = new Subscription()
 
   // Variables de colores usados en el componente
@@ -50,12 +52,26 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { name: "Perfil", url: "/user-profile", hasIcon: true, iconType: 'profile' }
   ]
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     // Suscribirse a los cambios de usuario
-    this.userSubscription = this.authService.user$.subscribe((user) => {
+    this.userSubscription = this.authService.user$.subscribe(async (user) => {
       this.currentUser = user
+      
+      // Si hay usuario autenticado, cargar su perfil para obtener la imagen
+      if (user) {
+        try {
+          this.userProfile = await this.userService.getUserProfile(user.uid)
+        } catch (error) {
+          console.error("Error al cargar perfil del usuario en navbar:", error)
+        }
+      } else {
+        this.userProfile = null
+      }
     })
   }
 
@@ -98,6 +114,29 @@ export class NavbarComponent implements OnInit, OnDestroy {
       return this.currentUser.email.split("@")[0]
     }
     return "Usuario"
+  }
+
+  // ✅ NUEVO: Obtener URL de imagen de perfil
+  getUserPhotoURL(): string | null {
+    // Priorizar imagen de Firebase Auth, luego de Firestore
+    return this.currentUser?.photoURL || this.userProfile?.photoURL || null
+  }
+
+  // ✅ NUEVO: Verificar si hay imagen de perfil disponible
+  hasUserPhoto(): boolean {
+    return !!this.getUserPhotoURL()
+  }
+
+  // ✅ NUEVO: Obtener iniciales del usuario para el avatar
+  getUserInitials(): string {
+    const displayName = this.getUserDisplayName()
+    const words = displayName.split(' ')
+    
+    if (words.length >= 2) {
+      return (words[0][0] + words[1][0]).toUpperCase()
+    } else {
+      return displayName.substring(0, 2).toUpperCase()
+    }
   }
 
   // Función para hacer scroll suave a secciones

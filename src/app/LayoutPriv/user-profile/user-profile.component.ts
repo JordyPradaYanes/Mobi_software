@@ -57,7 +57,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       displayName: ["", [Validators.required, Validators.minLength(2)]],
       email: ["", [Validators.required, Validators.email]],
       phoneNumber: ["", [Validators.pattern(/^[+]?[\d\s\-()]+$/)]],
-      photoURL: ["", [Validators.pattern(/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/i)]],
+      photoURL: ["", []],
     })
 
     this.passwordForm = this.formBuilder.group(
