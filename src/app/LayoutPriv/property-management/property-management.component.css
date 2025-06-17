@@ -1,102 +1,228 @@
-.management-container {
-  padding: 20px;
-  font-family: Arial, sans-serif;
+/* Estilos adicionales para las cards de propiedades mejoradas */
+
+/* Animación suave para el hover de las cards */
+.property-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
 }
 
-.management-container h1 {
-  color: #333;
-  margin-bottom: 20px;
-  text-align: center;
+.property-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-.add-property-button {
-  background-color: #4CAF50; /* Green */
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1em;
-  display: block;
-  margin: 0 auto 25px auto;
-  min-width: 200px;
+/* Efecto de brillo en el hover */
+.property-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.add-property-button:hover {
-  background-color: #45a049;
+.property-card:hover::before {
+  left: 100%;
 }
 
-.loading-message,
-.error-message,
-.no-properties-message {
-  text-align: center;
-  padding: 20px;
-  font-size: 1.1em;
-  color: #666;
+/* Animación para los botones */
+.btn-property {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
-.error-message p {
-  color: #D8000C; /* Red for errors */
-  background-color: #FFD2D2;
-  border: 1px solid #D8000C;
-  padding: 10px;
-  border-radius: 4px;
+.btn-property::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
 }
 
-.properties-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 25px;
+.btn-property:hover::before {
+  left: 100%;
 }
 
-.property-item-container {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  /* Align items for consistent button placement if card heights vary slightly */
+/* Efecto de pulsación para elementos interactivos */
+.pulse-on-hover:hover {
+  animation: pulse 2s infinite;
 }
 
-/* Ensure app-property-card itself doesn't have excessive margins */
-.property-item-container app-property-card {
-  margin-bottom: 0; /* Remove default margin if any, to control spacing with action buttons */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
 }
 
-.property-actions {
-  display: flex;
-  justify-content: space-around; /* Distribute buttons evenly */
-  padding: 10px;
-  border-top: 1px solid #eee; /* Separator line */
-  background-color: #f9f9f9;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+/* Animación para el loading de las imágenes */
+.image-loading {
+  background: linear-gradient(-90deg, #f0f0f0 0%, #e0e0e0 50%, #f0f0f0 100%);
+  background-size: 400% 400%;
+  animation: shimmer 1.5s ease-in-out infinite;
 }
 
-.property-actions button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9em;
-  min-width: 80px; /* Ensure buttons have a decent size */
+@keyframes shimmer {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -200% 0%;
+  }
 }
 
-.edit-button {
-  background-color: #2196F3; /* Blue */
-  color: white;
+/* Efecto de glassmorphism para los badges */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.edit-button:hover {
-  background-color: #0b7dda;
+/* Transiciones suaves para los badges */
+.badge-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.delete-button {
-  background-color: #f44336; /* Red */
-  color: white;
+.badge-transition:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.delete-button:hover {
-  background-color: #da190b;
+/* Efecto de typing para el texto */
+.typing-effect {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid transparent;
+  animation: typing 3.5s steps(40, end);
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Clase utilitaria para truncar texto */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Efecto de hover para las imágenes */
+.image-hover-zoom {
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.image-hover-zoom:hover {
+  transform: scale(1.1);
+}
+
+/* Animación de entrada para las cards */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Delay para animaciones en cascada */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* Efecto de resplandor para elementos destacados */
+.glow-effect {
+  position: relative;
+}
+
+.glow-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-effect:hover::after {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .property-card:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+  
+  .btn-property {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .property-card {
+    background-color: rgba(17, 24, 39, 0.8);
+    border-color: rgba(75, 85, 99, 0.3);
+  }
+  
+  .glass-effect {
+    background: rgba(17, 24, 39, 0.25);
+    border: 1px solid rgba(75, 85, 99, 0.18);
+  }
 }

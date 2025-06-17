@@ -1,20 +1,115 @@
-<div class="favorites-container">
-  <h1>My Favorite Properties</h1>
-  <div *ngIf="favoriteProperties$ | async as properties; else loadingOrEmpty">
-    <div *ngIf="properties.length > 0; else noFavorites" class="favorites-grid">
-      <div *ngFor="let property of properties" class="favorite-item">
-        <app-property-card [property]="property"></app-property-card>
-        <button (click)="removeFavorite(property.id.toString())" class="remove-button">
-          Remove from Favorites
-        </button>
+<app-navbar></app-navbar>
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 sm:p-6 lg:p-8">
+  <div class="max-w-7xl mt-16 mx-auto">
+    <!-- Header Section -->
+    <div class="text-center mb-12">
+      <div class="flex items-center justify-center mb-6">
+        <div class="inline-flex mr-6 items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-6 shadow-lg">
+          <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <h1 class="text-4xl font-bold text-slate-800 mb-4">
+          Mis Propiedades Favoritas
+        </h1>
+      </div>
+      <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+        Encuentra aquí todas las propiedades que has guardado como favoritas. 
+        Mantén un seguimiento de las mejores opciones para tu próxima inversión.
+      </p>
+    </div>
+
+    <!-- Content Section -->
+    <div *ngIf="!isLoading; else loadingTemplate">
+      <div *ngIf="favoriteProperties$ | async as properties">
+        <div *ngIf="properties.length > 0; else noFavorites">
+          <!-- Stats Card -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-lg font-semibold text-slate-800">Total de Favoritos</h3>
+                <p class="text-sm text-slate-600">Propiedades guardadas</p>
+              </div>
+              <div class="bg-blue-100 text-blue-800 text-2xl font-bold px-4 py-2 rounded-xl">
+                {{ properties.length }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Favorites Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div *ngFor="let property of properties; trackBy: trackByPropertyId" 
+                 class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 overflow-hidden transform hover:-translate-y-1">
+              
+              <!-- Property Card -->
+              <div class="relative">
+                <app-property-card [property]="property" class="block"></app-property-card>
+                
+                <!-- Favorite Badge -->
+                <div class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full shadow-lg">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Action Button -->
+              <div class="p-4 border-t border-slate-100">
+                <button 
+                  (click)="removeFavorite(property.id!.toString())" 
+                  class="w-full bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 font-medium py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2 group-hover:bg-red-500 group-hover:text-white">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                  <span>Quitar de Favoritos</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Favorites State -->
+        <ng-template #noFavorites>
+          <div class="text-center py-16">
+            <div class="mx-auto w-32 h-32 bg-slate-100 rounded-full flex items-center justify-center mb-8">
+              <svg class="w-16 h-16 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-semibold text-slate-800 mb-4">
+              No tienes favoritos aún
+            </h3>
+            <p class="text-slate-600 mb-8 max-w-md mx-auto">
+              Explora nuestro catálogo de propiedades y marca como favoritas aquellas que más te interesen. 
+              Podrás encontrarlas fácilmente aquí.
+            </p>
+            <button class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors duration-200">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              Explorar Propiedades
+            </button>
+          </div>
+        </ng-template>
       </div>
     </div>
-    <ng-template #noFavorites>
-      <p>You haven't added any properties to your favorites yet.</p>
+
+    <!-- Loading Template -->
+    <ng-template #loadingTemplate>
+      <div class="text-center py-16">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 animate-pulse">
+          <svg class="w-8 h-8 text-blue-600 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-slate-800 mb-2">
+          Cargando tus favoritos...
+        </h3>
+        <p class="text-slate-600">
+          Estamos obteniendo tus propiedades guardadas
+        </p>
+      </div>
     </ng-template>
   </div>
-  <ng-template #loadingOrEmpty>
-    <p>Loading favorites...</p>
-    <!-- Consider a more specific message if properties is null vs empty after loading -->
-  </ng-template>
 </div>

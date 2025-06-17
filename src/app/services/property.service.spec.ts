@@ -22,13 +22,15 @@ const mockPropertyData: Omit<Property, 'id'> = {
   bedrooms: 3,
   bathrooms: 2,
   description: 'Test desc',
-  type: 'House',
-  status: 'For Sale',
   userId: 'user123',
   imageUrls: [],
-  features: [],
   createdAt: new Date(),
   updatedAt: new Date(),
+  propertyType: 'casa',
+  transactionType: 'venta',
+  neighborhood: '',
+  city: '',
+  totalArea: 0
 };
 
 describe('PropertyService', () => {

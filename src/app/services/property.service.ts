@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, doc, getDoc, query, where, getDocs } from '@angular/fire/firestore';
+import { Firestore, collection, doc, getDoc, query, where, getDocs, setDoc, deleteDoc } from '@angular/fire/firestore';
 import { Observable, from, of, forkJoin } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { Property } from '../interfaces/property.interface';
@@ -9,9 +9,11 @@ import { Property } from '../interfaces/property.interface';
 })
 export class PropertyService {
 
-  private propertiesCollection = collection(this.firestore, 'properties');
+  private propertiesCollection;
 
-  constructor(private firestore: Firestore) { }
+  constructor(private firestore: Firestore) {
+    this.propertiesCollection = collection(this.firestore, 'properties');
+  }
 
   // Example method: Get all properties (you might have this already)
   getProperties(): Observable<Property[]> {

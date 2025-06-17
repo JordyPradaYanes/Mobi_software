@@ -35,6 +35,7 @@ export const routes: Routes = [
     { path: 'property-form/:id', component: PropertyFormComponent }, // Added for editing
     { path: 'favorites', component: FavoritesComponent},
     { path: 'property-management', component: PropertyManagementComponent},
-    { path: 'user-profile', component: UserProfileComponent}
+    { path: 'user-profile', component: UserProfileComponent},
+    { path: 'property-card', component: PropertyCardComponent } // Assuming standalone component
 ];
 
