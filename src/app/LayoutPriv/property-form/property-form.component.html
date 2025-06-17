@@ -1,77 +1,546 @@
-<div class="property-form-container">
-  <h2>{{ successMessage ? 'Success!' : 'Add New Property' }}</h2>
+<app-navbar *ngIf="isReady"></app-navbar>
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-8 px-4">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="text-center mt-16 mb-8">
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-3">
+        {{ successMessage ? '¡Propiedad Publicada!' : 'Nueva Propiedad' }}
+      </h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Complete todos los detalles para crear una publicación atractiva y efectiva
+      </p>
+    </div>
 
-  <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
-    <!-- Address -->
-    <div class="form-group">
-      <label for="address">Address</label>
-      <input type="text" id="address" formControlName="address" class="form-control">
-      <div *ngIf="formControls['address'].touched && formControls['address'].errors?.['required']" class="text-danger">
-        Address is required.
+    <!-- Success Alert -->
+    <div *ngIf="successMessage" class="mb-8 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6 shadow-sm animate-pulse">
+      <div class="flex items-start space-x-4">
+        <div class="flex-shrink-0">
+          <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold text-green-800 mb-1">¡Propiedad agregada exitosamente!</h3>
+          <p class="text-green-700">{{ successMessage }}</p>
+        </div>
       </div>
     </div>
 
-    <!-- Price -->
-    <div class="form-group">
-      <label for="price">Price</label>
-      <input type="number" id="price" formControlName="price" class="form-control">
-      <div *ngIf="formControls['price'].touched && formControls['price'].errors?.['required']" class="text-danger">
-        Price is required.
-      </div>
-      <div *ngIf="formControls['price'].touched && formControls['price'].errors?.['min']" class="text-danger">
-        Price must be greater than 0.
-      </div>
-    </div>
-
-    <!-- Bedrooms -->
-    <div class="form-group">
-      <label for="bedrooms">Bedrooms</label>
-      <input type="number" id="bedrooms" formControlName="bedrooms" class="form-control">
-      <div *ngIf="formControls['bedrooms'].touched && formControls['bedrooms'].errors?.['required']" class="text-danger">
-        Number of bedrooms is required.
-      </div>
-      <div *ngIf="formControls['bedrooms'].touched && formControls['bedrooms'].errors?.['min']" class="text-danger">
-        Number of bedrooms cannot be negative.
+    <!-- Error Alert -->
+    <div *ngIf="errorMessage" class="mb-8 bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-6 shadow-sm">
+      <div class="flex items-start space-x-4">
+        <div class="flex-shrink-0">
+          <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold text-red-800 mb-1">Error</h3>
+          <p class="text-red-700">{{ errorMessage }}</p>
+        </div>
       </div>
     </div>
 
-    <!-- Bathrooms -->
-    <div class="form-group">
-      <label for="bathrooms">Bathrooms</label>
-      <input type="number" id="bathrooms" formControlName="bathrooms" class="form-control">
-      <div *ngIf="formControls['bathrooms'].touched && formControls['bathrooms'].errors?.['required']" class="text-danger">
-        Number of bathrooms is required.
-      </div>
-      <div *ngIf="formControls['bathrooms'].touched && formControls['bathrooms'].errors?.['min']" class="text-danger">
-        Number of bathrooms cannot be negative.
-      </div>
+    <!-- Form Card -->
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+      <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Form Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
+          <h2 class="text-2xl font-bold text-white">Información de la Propiedad</h2>
+          <p class="text-blue-100 mt-1">Todos los campos marcados con * son obligatorios</p>
+        </div>
+
+        <div class="p-8 space-y-8">
+          
+          <!-- Información Básica -->
+          <div class="space-y-6">
+            <div class="border-l-4 border-blue-500 pl-4">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">📍 Información Básica</h3>
+              <p class="text-gray-600">Datos esenciales de la propiedad</p>
+            </div>
+
+            <!-- Property Type and Transaction Type -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Property Type -->
+              <div>
+                <label for="propertyType" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Tipo de Propiedad <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <select 
+                    id="propertyType" 
+                    formControlName="propertyType" 
+                    class="w-full px-4 py-3 pr-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white appearance-none"
+                    [class.border-red-500]="formControls['propertyType'].touched && formControls['propertyType'].errors">
+                    <option value="">Seleccionar tipo</option>
+                    <option *ngFor="let type of propertyTypes" [value]="type.value">
+                      {{ type.label }}
+                    </option>
+                  </select>
+                  <svg class="absolute right-3 top-3 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </div>
+                <div *ngIf="formControls['propertyType'].touched && formControls['propertyType'].errors?.['required']" 
+                     class="mt-2 text-sm text-red-600 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Seleccione el tipo de propiedad
+                </div>
+              </div>
+
+              <!-- Transaction Type -->
+              <div>
+                <label for="transactionType" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Tipo de Transacción <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <select 
+                    id="transactionType" 
+                    formControlName="transactionType" 
+                    class="w-full px-4 py-3 pr-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white appearance-none"
+                    [class.border-red-500]="formControls['transactionType'].touched && formControls['transactionType'].errors">
+                    <option value="">Seleccionar transacción</option>
+                    <option *ngFor="let type of transactionTypes" [value]="type.value">
+                      {{ type.label }}
+                    </option>
+                  </select>
+                  <svg class="absolute right-3 top-3 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </div>
+                <div *ngIf="formControls['transactionType'].touched && formControls['transactionType'].errors?.['required']" 
+                     class="mt-2 text-sm text-red-600 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Seleccione el tipo de transacción
+                </div>
+              </div>
+            </div>
+
+            <!-- Address -->
+            <div>
+              <label for="address" class="block text-sm font-semibold text-gray-700 mb-3">
+                Dirección Completa <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <input 
+                  type="text" 
+                  id="address" 
+                  formControlName="address" 
+                  class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                  [class.border-red-500]="formControls['address'].touched && formControls['address'].errors"
+                  placeholder="Ej: Carrera 15 #123-45, Barrio Chapinero, Bogotá">
+                <svg class="absolute left-3 top-3 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </div>
+              <div *ngIf="formControls['address'].touched && formControls['address'].errors?.['required']" 
+                   class="mt-2 text-sm text-red-600 flex items-center">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                La dirección es requerida
+              </div>
+            </div>
+
+            <!-- Neighborhood and City -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="neighborhood" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Barrio <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="neighborhood" 
+                  formControlName="neighborhood" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                  [class.border-red-500]="formControls['neighborhood'].touched && formControls['neighborhood'].errors"
+                  placeholder="Ej: Chapinero">
+                <div *ngIf="formControls['neighborhood'].touched && formControls['neighborhood'].errors?.['required']" 
+                     class="mt-2 text-sm text-red-600 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  El barrio es requerido
+                </div>
+              </div>
+
+              <div>
+                <label for="city" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Ciudad <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="city" 
+                  formControlName="city" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                  [class.border-red-500]="formControls['city'].touched && formControls['city'].errors"
+                  placeholder="Ej: Bogotá">
+                <div *ngIf="formControls['city'].touched && formControls['city'].errors?.['required']" 
+                     class="mt-2 text-sm text-red-600 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  La ciudad es requerida
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Información Económica -->
+          <div class="space-y-6">
+            <div class="border-l-4 border-green-500 pl-4">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">💰 Información Económica</h3>
+              <p class="text-gray-600">Precios y costos asociados</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Price -->
+              <div>
+                <label for="price" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Precio <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <span class="absolute left-4 top-3 text-gray-500 font-semibold text-lg">$</span>
+                  <input 
+                    type="number" 
+                    id="price" 
+                    formControlName="price" 
+                    class="w-full pl-10 pr-16 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 text-lg font-semibold"
+                    [class.border-red-500]="formControls['price'].touched && formControls['price'].errors"
+                    placeholder="1500000">
+                  <span class="absolute right-4 top-3 text-sm text-gray-500">COP</span>
+                </div>
+                <div *ngIf="formControls['price'].touched && formControls['price'].errors?.['required']" 
+                     class="mt-2 text-sm text-red-600 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  El precio es requerido
+                </div>
+                <div *ngIf="formControls['price'].touched && formControls['price'].errors?.['min']" 
+                     class="mt-2 text-sm text-red-600 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  El precio debe ser mayor a 0
+                </div>
+              </div>
+
+              <!-- Administration Fee -->
+              <div>
+                <label for="administrationFee" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Administración (mensual)
+                </label>
+                <div class="relative">
+                  <span class="absolute left-4 top-3 text-gray-500 font-semibold">$</span>
+                  <input 
+                    type="number" 
+                    id="administrationFee" 
+                    formControlName="administrationFee" 
+                    class="w-full pl-10 pr-16 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                    [class.border-red-500]="formControls['administrationFee'].touched && formControls['administrationFee'].errors"
+                    placeholder="150000">
+                  <span class="absolute right-4 top-3 text-sm text-gray-500">COP</span>
+                </div>
+                <p class="mt-1 text-xs text-gray-500">Dejar vacío si no aplica</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Características Físicas -->
+          <div class="space-y-6">
+            <div class="border-l-4 border-purple-500 pl-4">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">🏠 Características Físicas</h3>
+              <p class="text-gray-600">Especificaciones de la propiedad</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <!-- Bedrooms -->
+              <div>
+                <label for="bedrooms" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Habitaciones <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <input 
+                    type="number" 
+                    id="bedrooms" 
+                    formControlName="bedrooms" 
+                    class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 text-center text-lg font-semibold"
+                    [class.border-red-500]="formControls['bedrooms'].touched && formControls['bedrooms'].errors"
+                    placeholder="3">
+                  <svg class="absolute right-3 top-3 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21v-4a2 2 0 012-2h4a2 2 0 012 2v4"></path>
+                  </svg>
+                </div>
+                <div *ngIf="formControls['bedrooms'].touched && formControls['bedrooms'].errors?.['required']" 
+                     class="mt-2 text-sm text-red-600 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Requerido
+                </div>
+              </div>
+
+              <!-- Bathrooms -->
+              <div>
+                <label for="bathrooms" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Baños <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <input 
+                    type="number" 
+                    id="bathrooms" 
+                    formControlName="bathrooms" 
+                    class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 text-center text-lg font-semibold"
+                    [class.border-red-500]="formControls['bathrooms'].touched && formControls['bathrooms'].errors"
+                    placeholder="2">
+                  <svg class="absolute right-3 top-3 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
+                  </svg>
+                </div>
+                <div *ngIf="formControls['bathrooms'].touched && formControls['bathrooms'].errors?.['required']" 
+                     class="mt-2 text-sm text-red-600 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Requerido
+                </div>
+              </div>
+
+              <!-- Parking Spaces -->
+              <div>
+                <label for="parkingSpaces" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Parqueaderos
+                </label>
+                <div class="relative">
+                  <input 
+                    type="number" 
+                    id="parkingSpaces" 
+                    formControlName="parkingSpaces" 
+                    class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 text-center text-lg font-semibold"
+                    placeholder="1">
+                  <svg class="absolute right-3 top-3 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 6a4 4 0 11-8 0 4 4 0 018 0zM9 6a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Floor/Level -->
+              <div>
+                <label for="floor" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Piso
+                </label>
+                <div class="relative">
+                  <input 
+                    type="number" 
+                    id="floor" 
+                    formControlName="floor" 
+                    class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 text-center text-lg font-semibold"
+                    placeholder="1">
+                  <svg class="absolute right-3 top-3 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Area -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="totalArea" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Área Total <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <input 
+                    type="number" 
+                    id="totalArea" 
+                    formControlName="totalArea" 
+                    class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                    [class.border-red-500]="formControls['totalArea'].touched && formControls['totalArea'].errors"
+                    placeholder="120">
+                  <span class="absolute right-4 top-3 text-sm text-gray-500 font-medium">m²</span>
+                </div>
+                <div *ngIf="formControls['totalArea'].touched && formControls['totalArea'].errors?.['required']" 
+                     class="mt-2 text-sm text-red-600 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  El área total es requerida
+                </div>
+              </div>
+
+              <div>
+                <label for="builtArea" class="block text-sm font-semibold text-gray-700 mb-3">
+                  Área Construida
+                </label>
+                <div class="relative">
+                  <input 
+                    type="number" 
+                    id="builtArea" 
+                    formControlName="builtArea" 
+                    class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                    placeholder="100">
+                  <span class="absolute right-4 top-3 text-sm text-gray-500 font-medium">m²</span>
+                </div>
+                <p class="mt-1 text-xs text-gray-500">Debe ser menor o igual al área total</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Amenidades -->
+          <div class="space-y-6">
+            <div class="border-l-4 border-orange-500 pl-4">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">✨ Amenidades</h3>
+              <p class="text-gray-600">Características adicionales de la propiedad</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div *ngFor="let amenity of commonAmenities; let i = index" class="flex items-center">
+                <input 
+                  type="checkbox" 
+                  [id]="'amenity-' + i"
+                  [formControlName]="i"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+                <label [for]="'amenity-' + i" class="ml-2 text-sm font-medium text-gray-700 cursor-pointer">
+                  {{ amenity }}
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Descripción -->
+          <div class="space-y-6">
+            <div class="border-l-4 border-indigo-500 pl-4">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">📝 Descripción</h3>
+              <p class="text-gray-600">Descripción detallada de la propiedad</p>
+            </div>
+
+            <div>
+              <label for="description" class="block text-sm font-semibold text-gray-700 mb-3">
+                Descripción Completa <span class="text-red-500">*</span>
+              </label>
+              <textarea 
+                id="description" 
+                formControlName="description" 
+                rows="6"
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 resize-none"
+                [class.border-red-500]="formControls['description'].touched && formControls['description'].errors"
+                placeholder="Describa detalladamente la propiedad, sus características, ubicación, estado, y cualquier información relevante que pueda interesar a los compradores o arrendatarios...">
+              </textarea>
+              <div class="flex justify-between items-center mt-2">
+                <div *ngIf="formControls['description'].touched && formControls['description'].errors?.['required']" 
+                     class="text-sm text-red-600 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  La descripción es requerida (mínimo 20 caracteres)
+                </div>
+                <div *ngIf="formControls['description'].touched && formControls['description'].errors?.['minlength']" 
+                     class="text-sm text-red-600 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Mínimo 20 caracteres
+                </div>
+                <span class="text-sm text-gray-500">
+                  {{ formControls['description'].value?.length || 0 }} caracteres
+                </span>
+              </div>
+            </div>
+
+            <!-- Nearby Places -->
+            <div>
+              <label for="nearbyPlaces" class="block text-sm font-semibold text-gray-700 mb-3">
+                Lugares Cercanos
+              </label>
+              <input 
+                type="text" 
+                id="nearbyPlaces" 
+                formControlName="nearbyPlaces" 
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                placeholder="Ej: Centro Comercial Andino, Transmilenio, Hospital San Ignacio (separar con comas)">
+              <p class="mt-1 text-xs text-gray-500">Separar múltiples lugares con comas</p>
+            </div>
+          </div>
+
+          <!-- Imágenes -->
+          <div class="space-y-6">
+            <div class="border-l-4 border-pink-500 pl-4">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">📸 Imágenes</h3>
+              <p class="text-gray-600">URLs de las imágenes de la propiedad</p>
+            </div>
+
+            <div class="space-y-4">
+              <div *ngFor="let imageUrl of imageUrlsArray.controls; let i = index" class="flex gap-3">
+                <div class="flex-1">
+                  <input 
+                    type="url" 
+                    [formControlName]="i"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                    [placeholder]="'URL de imagen ' + (i + 1)">
+                </div>
+                <button 
+                  type="button" 
+                  (click)="removeImageUrl(i)"
+                  class="px-4 py-3 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition-colors duration-200">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H8a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                </button>
+              </div>
+              
+              <button 
+                type="button" 
+                (click)="addImageUrl()"
+                class="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-all duration-200 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Agregar URL de imagen
+              </button>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
+            <button 
+              type="submit" 
+              [disabled]="isLoading"
+              class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:from-blue-700 hover:to-indigo-700 focus:ring-4 focus:ring-blue-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3">
+              <svg *ngIf="isLoading" class="animate-spin w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+              <svg *ngIf="!isLoading" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+              </svg>
+              {{ isLoading ? 'Publicando...' : 'Publicar Propiedad' }}
+            </button>
+            
+            <button 
+              type="button" 
+              (click)="resetForm()"
+              [disabled]="isLoading"
+              class="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 focus:ring-4 focus:ring-gray-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+              Limpiar Formulario
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-
-    <!-- Description -->
-    <div class="form-group">
-      <label for="description">Description</label>
-      <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
-      <div *ngIf="formControls['description'].touched && formControls['description'].errors?.['required']" class="text-danger">
-        Description is required.
-      </div>
-    </div>
-
-    <!-- Image URLs (Simplified as text input for now) -->
-    <!-- For a real application, a file upload or a more complex FormArray input would be better -->
-    <!-- <div class="form-group">
-      <label for="imageUrl">Image URL (Optional)</label>
-      <input type="url" id="imageUrl" formControlName="imageUrls" class="form-control">
-      <small>For multiple images, this needs to be enhanced (e.g., FormArray with multiple inputs or file uploads).</small>
-    </div> -->
-
-    <!-- User Feedback -->
-    <div *ngIf="isLoading" class="alert alert-info">Submitting property...</div>
-    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
-    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary" [disabled]="isLoading">
-      {{ isLoading ? 'Submitting...' : 'Add Property' }}
-    </button>
-  </form>
+  </div>
 </div>
