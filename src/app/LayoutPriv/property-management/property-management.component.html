@@ -1,1 +1,29 @@
-<p>property-management works!</p>
+<div class="management-container">
+  <h1>Manage Your Properties</h1>
+
+  <button (click)="addNewProperty()" class="add-property-button">Add New Property</button>
+
+  <div *ngIf="isLoading" class="loading-message">
+    <p>Loading your properties...</p>
+    <!-- You can add a spinner here -->
+  </div>
+
+  <div *ngIf="errorFetching" class="error-message">
+    <p>{{ errorFetching }}</p>
+  </div>
+
+  <div *ngIf="!isLoading && !errorFetching">
+    <div *ngIf="userProperties.length > 0; else noProperties" class="properties-grid">
+      <div *ngFor="let property of userProperties" class="property-item-container">
+        <app-property-card [property]="property"></app-property-card>
+        <div class="property-actions">
+          <button (click)="editProperty(property.id)" class="edit-button">Edit</button>
+          <button (click)="deleteProperty(property.id)" class="delete-button">Delete</button>
+        </div>
+      </div>
+    </div>
+    <ng-template #noProperties>
+      <p class="no-properties-message">You have not listed any properties yet. Click "Add New Property" to get started.</p>
+    </ng-template>
+  </div>
+</div>
