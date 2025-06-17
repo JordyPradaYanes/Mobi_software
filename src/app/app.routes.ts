@@ -31,8 +31,8 @@ export const routes: Routes = [
 
     //LayoutPriv
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'property-card', component: PropertyCardComponent},
     { path: 'property-form', component: PropertyFormComponent},
+    { path: 'property-form/:id', component: PropertyFormComponent }, // Added for editing
     { path: 'favorites', component: FavoritesComponent},
     { path: 'property-management', component: PropertyManagementComponent},
     { path: 'user-profile', component: UserProfileComponent}

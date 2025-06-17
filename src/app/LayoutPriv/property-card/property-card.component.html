@@ -1,1 +1,11 @@
-<p>property-card works!</p>
+<div *ngIf="property" class="property-card">
+  <img [src]="property.imageUrl || 'https://via.placeholder.com/300x200'" alt="Property Image" class="property-image">
+  <div class="property-details">
+    <h2>{{ property.address }}</h2>
+    <p class="price">{{ property.price | currency:'USD':'symbol':'1.0-0' }}</p>
+    <p>{{ property.bedrooms }} Bedrooms | {{ property.bathrooms }} Bathrooms</p>
+  </div>
+</div>
+<div *ngIf="!property">
+  <p>No property data available.</p>
+</div>

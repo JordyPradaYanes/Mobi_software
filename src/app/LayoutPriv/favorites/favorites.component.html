@@ -1,1 +1,20 @@
-<p>favorites works!</p>
+<div class="favorites-container">
+  <h1>My Favorite Properties</h1>
+  <div *ngIf="favoriteProperties$ | async as properties; else loadingOrEmpty">
+    <div *ngIf="properties.length > 0; else noFavorites" class="favorites-grid">
+      <div *ngFor="let property of properties" class="favorite-item">
+        <app-property-card [property]="property"></app-property-card>
+        <button (click)="removeFavorite(property.id.toString())" class="remove-button">
+          Remove from Favorites
+        </button>
+      </div>
+    </div>
+    <ng-template #noFavorites>
+      <p>You haven't added any properties to your favorites yet.</p>
+    </ng-template>
+  </div>
+  <ng-template #loadingOrEmpty>
+    <p>Loading favorites...</p>
+    <!-- Consider a more specific message if properties is null vs empty after loading -->
+  </ng-template>
+</div>
