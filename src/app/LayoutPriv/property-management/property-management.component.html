@@ -1,42 +1,25 @@
 <app-navbar></app-navbar>
 
 <!-- Main Container -->
-<div
-  class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-8 px-4"
-  (keydown)="onKeyDown($event)"
->
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-8 px-4"
+  (keydown)="onKeyDown($event)">
   <div class="max-w-7xl mt-16 mx-auto">
     <!-- Header Section -->
     <div class="mb-8">
-      <div
-        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
-      >
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1
-            class="text-4xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent mb-2"
-          >
+          <h1 class="text-4xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent mb-2">
             Gestión de Propiedades
           </h1>
           <p class="text-slate-600 text-lg">
             Administra y controla todas tus propiedades desde un solo lugar
           </p>
         </div>
-        <button
-          (click)="addNewProperty()"
-          class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50"
-        >
-          <svg
-            class="w-5 h-5 mr-3 transition-transform group-hover:rotate-90 duration-300"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            ></path>
+        <button (click)="addNewProperty()"
+          class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50">
+          <svg class="w-5 h-5 mr-3 transition-transform group-hover:rotate-90 duration-300" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
           </svg>
           Agregar Propiedad
         </button>
@@ -44,17 +27,12 @@
     </div>
 
     <!-- Loading State -->
-    <div
-      *ngIf="isLoading"
-      class="flex flex-col items-center justify-center py-20"
-    >
+    <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-20">
       <div class="relative">
+        <div class="animate-spin rounded-full h-20 w-20 border-4 border-blue-200"></div>
         <div
-          class="animate-spin rounded-full h-20 w-20 border-4 border-blue-200"
-        ></div>
-        <div
-          class="animate-spin rounded-full h-20 w-20 border-4 border-blue-600 border-t-transparent absolute top-0 left-0"
-        ></div>
+          class="animate-spin rounded-full h-20 w-20 border-4 border-blue-600 border-t-transparent absolute top-0 left-0">
+        </div>
       </div>
       <p class="text-slate-600 text-lg mt-6 animate-pulse">
         Cargando tus propiedades...
@@ -63,26 +41,13 @@
 
     <!-- Error State -->
     <div *ngIf="errorFetching && !isLoading" class="max-w-md mx-auto">
-      <div
-        class="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-2xl p-6 shadow-lg"
-      >
+      <div class="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-2xl p-6 shadow-lg">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <div
-              class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center"
-            >
-              <svg
-                class="h-6 w-6 text-red-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                ></path>
+            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+              <svg class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
           </div>
@@ -94,10 +59,8 @@
           </div>
         </div>
         <div class="mt-6">
-          <button
-            (click)="loadUserProperties()"
-            class="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-lg"
-          >
+          <button (click)="loadUserProperties()"
+            class="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-lg">
             Intentar de nuevo
           </button>
         </div>
@@ -111,25 +74,15 @@
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div
-            class="group bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
+            class="group bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div class="flex items-center">
               <div class="flex-shrink-0">
                 <div
-                  class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300"
-                >
-                  <svg
-                    class="w-7 h-7 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                    ></path>
+                  class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                    </path>
                   </svg>
                 </div>
               </div>
@@ -145,25 +98,14 @@
           </div>
 
           <div
-            class="group bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
+            class="group bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div class="flex items-center">
               <div class="flex-shrink-0">
                 <div
-                  class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300"
-                >
-                  <svg
-                    class="w-7 h-7 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    ></path>
+                  class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
                 </div>
               </div>
@@ -179,25 +121,14 @@
           </div>
 
           <div
-            class="group bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
+            class="group bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div class="flex items-center">
               <div class="flex-shrink-0">
                 <div
-                  class="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300"
-                >
-                  <svg
-                    class="w-7 h-7 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                    ></path>
+                  class="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                   </svg>
                 </div>
               </div>
@@ -214,48 +145,26 @@
         </div>
 
         <!-- Search and Filter Bar -->
-        <div
-          class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 p-6 mb-8"
-        >
+        <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 p-6 mb-8">
           <div class="flex flex-col sm:flex-row gap-4">
             <div class="flex-1">
-              <label for="property-search" class="sr-only"
-                >Buscar propiedades</label
-              >
+              <label for="property-search" class="sr-only">Buscar propiedades</label>
               <div class="relative group">
-                <div
-                  class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
-                >
-                  <svg
-                    class="h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors duration-200"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    ></path>
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors duration-200"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                   </svg>
                 </div>
-                <input
-                  id="property-search"
-                  [(ngModel)]="searchTerm"
-                  (input)="filterProperties()"
-                  type="text"
+                <input id="property-search" [(ngModel)]="searchTerm" (input)="filterProperties()" type="text"
                   placeholder="Buscar por dirección, barrio, tipo, descripción..."
-                  class="block w-full pl-12 pr-4 py-3 border border-slate-200 rounded-xl bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-slate-400"
-                />
+                  class="block w-full pl-12 pr-4 py-3 border border-slate-200 rounded-xl bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-slate-400" />
               </div>
             </div>
             <div class="sm:w-56">
-              <select
-                [(ngModel)]="filterType"
-                (change)="filterProperties()"
-                class="block w-full px-4 py-3 border border-slate-200 rounded-xl bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-              >
+              <select [(ngModel)]="filterType" (change)="filterProperties()"
+                class="block w-full px-4 py-3 border border-slate-200 rounded-xl bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
                 <option value="">Todos los tipos</option>
                 <option value="casa">Casa</option>
                 <option value="apartamento">Apartamento</option>
@@ -266,23 +175,10 @@
                 <option value="finca">Finca</option>
               </select>
             </div>
-            <button
-              (click)="clearFilters()"
-              *ngIf="searchTerm || filterType"
-              class="px-6 py-3 text-slate-600 hover:text-slate-800 bg-white/50 backdrop-blur-sm border border-slate-200 rounded-xl hover:bg-white/80 transition-all duration-200 font-medium"
-            >
-              <svg
-                class="w-4 h-4 inline mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
+            <button (click)="clearFilters()" *ngIf="searchTerm || filterType"
+              class="px-6 py-3 text-slate-600 hover:text-slate-800 bg-white/50 backdrop-blur-sm border border-slate-200 rounded-xl hover:bg-white/80 transition-all duration-200 font-medium">
+              <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
               Limpiar
             </button>
@@ -292,20 +188,10 @@
         <!-- No results message -->
         <div *ngIf="filteredProperties.length === 0" class="text-center py-16">
           <div
-            class="mx-auto w-20 h-20 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center mb-6 shadow-inner"
-          >
-            <svg
-              class="w-10 h-10 text-slate-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              ></path>
+            class="mx-auto w-20 h-20 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center mb-6 shadow-inner">
+            <svg class="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
           </div>
           <h3 class="text-xl font-semibold text-slate-800 mb-3">
@@ -314,123 +200,68 @@
           <p class="text-slate-600 mb-6 max-w-md mx-auto">
             Intenta ajustar tus filtros de búsqueda para encontrar lo que buscas
           </p>
-          <button
-            (click)="clearFilters()"
-            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-xl transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-lg"
-          >
-            <svg
-              class="w-4 h-4 mr-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              ></path>
+          <button (click)="clearFilters()"
+            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-xl transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-lg">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+              </path>
             </svg>
             Ver todas las propiedades
           </button>
         </div>
 
         <!-- Properties Grid -->
-        <div
-          *ngIf="filteredProperties.length > 0"
-          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
-        >
-          <div
-            *ngFor="
+        <div *ngIf="filteredProperties.length > 0" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          <div *ngFor="
               let property of filteredProperties;
               trackBy: trackByPropertyId
             "
-            class="group bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:bg-white/80"
-          >
+            class="group bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:bg-white/80">
             <!-- Property Card Component -->
             <div class="relative overflow-hidden rounded-t-2xl">
-              <app-property-card
-                [property]="property"
-                class="block"
-              ></app-property-card>
+              <app-property-card [property]="property" class="block"></app-property-card>
               <!-- Overlay gradient for better text readability -->
               <div
-                class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              ></div>
+                class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              </div>
             </div>
 
             <!-- Enhanced Action Buttons -->
-            <div
-              class="p-6 bg-gradient-to-r from-slate-50/80 to-white/80 backdrop-blur-sm border-t border-slate-100"
-            >
+            <div class="p-6 bg-gradient-to-r from-slate-50/80 to-white/80 backdrop-blur-sm border-t border-slate-100">
               <div class="flex space-x-3">
-                <button
-                  (click)="viewProperty(property)"
-                  class="flex-1 group/btn inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white text-sm font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transform hover:-translate-y-0.5 hover:shadow-lg"
-                >
-                  <svg
-                    class="w-4 h-4 mr-2 transition-transform group-hover/btn:scale-110 duration-200"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    ></path>
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                    ></path>
+                <button (click)="viewProperty(property)"
+                  class="flex-1 group/btn inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white text-sm font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transform hover:-translate-y-0.5 hover:shadow-lg">
+                  <svg class="w-4 h-4 mr-2 transition-transform group-hover/btn:scale-110 duration-200" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                    </path>
                   </svg>
                   Ver
                 </button>
-                <button
-                  (click)="editProperty(property.id!)"
-                  class="flex-1 group/btn inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform hover:-translate-y-0.5 hover:shadow-lg"
-                >
-                  <svg
-                    class="w-4 h-4 mr-2 transition-transform group-hover/btn:scale-110 duration-200"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                    ></path>
+                <button (click)="editProperty(property.id!)"
+                  class="flex-1 group/btn inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform hover:-translate-y-0.5 hover:shadow-lg">
+                  <svg class="w-4 h-4 mr-2 transition-transform group-hover/btn:scale-110 duration-200" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                    </path>
                   </svg>
                   Editar
                 </button>
-                <button
-                  (click)="deleteProperty(property.id!)"
-                  [disabled]="isDeleting"
-                  class="group/btn inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-red-400 disabled:to-red-400 text-white text-sm font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:cursor-not-allowed transform hover:-translate-y-0.5 hover:shadow-lg disabled:transform-none disabled:shadow-none"
-                >
-                  <svg
-                    *ngIf="!isDeleting"
-                    class="w-4 h-4 transition-transform group-hover/btn:scale-110 duration-200"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                    ></path>
+                <button (click)="deleteProperty(property.id!)" [disabled]="isDeleting"
+                  class="group/btn inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-red-400 disabled:to-red-400 text-white text-sm font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:cursor-not-allowed transform hover:-translate-y-0.5 hover:shadow-lg disabled:transform-none disabled:shadow-none">
+                  <svg *ngIf="!isDeleting" class="w-4 h-4 transition-transform group-hover/btn:scale-110 duration-200"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                    </path>
                   </svg>
-                  <div
-                    *ngIf="isDeleting"
-                    class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"
-                  ></div>
+                  <div *ngIf="isDeleting"
+                    class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
                 </button>
               </div>
             </div>
@@ -442,858 +273,410 @@
       <ng-template #noProperties>
         <div class="text-center py-20">
           <div
-            class="mx-auto w-28 h-28 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center mb-8 shadow-inner"
-          >
-            <svg
-              class="w-14 h-14 text-slate-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-              ></path>
+            class="mx-auto w-28 h-28 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center mb-8 shadow-inner">
+            <svg class="w-14 h-14 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+              </path>
             </svg>
           </div>
           <h3 class="text-2xl font-bold text-slate-800 mb-4">
             No tienes propiedades registradas
           </h3>
-          <p
-            class="text-slate-600 mb-10 max-w-md mx-auto text-lg leading-relaxed"
-          >
+          <p class="text-slate-600 mb-10 max-w-md mx-auto text-lg leading-relaxed">
             Comienza agregando tu primera propiedad para empezar a gestionar tu
             portafolio inmobiliario de manera profesional.
           </p>
-          <button
-            (click)="addNewProperty()"
-            class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
-          >
-            <svg
-              class="w-5 h-5 mr-3 transition-transform group-hover:rotate-90 duration-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              ></path>
+          <button (click)="addNewProperty()"
+            class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+            <svg class="w-5 h-5 mr-3 transition-transform group-hover:rotate-90 duration-300" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+              </path>
             </svg>
             Agregar Primera Propiedad
           </button>
         </div>
       </ng-template>
-    </div>
-  </div>
-</div>
 
-<!-- Enhanced Property Details Modal -->
-<div
-  *ngIf="isModalOpen && selectedProperty"
-  class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto"
-  (click)="onBackdropClick($event)"
->
-  <div
-    class="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-white/50"
-  >
-    <!-- Modal Header -->
-    <div
-      class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-200/50 px-8 py-6 rounded-t-3xl z-10"
-    >
-      <div class="flex items-center justify-between">
-        <div>
-          <h2
-            class="text-3xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent"
-          >
-            Detalles de la Propiedad
-          </h2>
-          <p class="text-slate-600 mt-2 text-lg">
-            {{ getPropertyTypeLabel(selectedProperty.propertyType) }} -
-            {{ getTransactionTypeLabel(selectedProperty.transactionType) }}
-          </p>
-        </div>
-        <button
-          (click)="closeModal()"
-          class="text-slate-400 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 rounded-2xl p-3 transition-all duration-200 hover:bg-slate-100"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            ></path>
-          </svg>
-        </button>
-      </div>
-    </div>
+      <!-- Enhanced Property Details Modal -->
+      <div *ngIf="isModalOpen && selectedProperty"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-start justify-center p-4 z-50"
+        (click)="onBackdropClick($event)">
+        <div
+          class="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl w-full max-w-4xl my-4 border border-white/50 max-h-[calc(100vh-2rem)] overflow-hidden flex flex-col">
 
-    <!-- Modal Content -->
-    <div class="p-8">
-      <!-- Property Images -->
-      <div
-        *ngIf="
-          selectedProperty.imageUrls && selectedProperty.imageUrls.length > 0
-        "
-        class="mb-10"
-      >
-        <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
-          <div
-            class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mr-3"
-          >
-            <svg
-              class="w-4 h-4 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-              ></path>
-            </svg>
-          </div>
-          Galería de Imágenes
-        </h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div
-            *ngFor="let imageUrl of selectedProperty.imageUrls"
-            class="group aspect-video bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            <img
-              [src]="imageUrl"
-              [alt]="'Imagen de ' + selectedProperty.address"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 cursor-pointer"
-            />
-          </div>
-        </div>
-      </div>
-
-      <!-- Property Details in Two Columns -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <!-- Left Column - Basic Information -->
-        <div class="space-y-8">
-          <!-- Location Information -->
-          <div
-            class="bg-gradient-to-br from-slate-50/80 to-blue-50/80 backdrop-blur-sm rounded-2xl p-8 border border-white/50"
-          >
-            <h3
-              class="text-xl font-semibold text-slate-800 mb-6 flex items-center"
-            >
-              <div
-                class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-3"
-              >
-                <svg
-                  class="w-4 h-4 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  ></path>
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  ></path>
-                </svg>
-              </div>
-              Ubicación
-            </h3>
-            <div class="space-y-4">
+          <!-- Modal Header - Fixed -->
+          <div class="bg-white/90 backdrop-blur-md border-b border-slate-200/50 px-8 py-6 rounded-t-3xl flex-shrink-0">
+            <div class="flex items-center justify-between">
               <div>
-                <label
-                  class="text-sm font-semibold text-slate-600 uppercase tracking-wide"
-                  >Dirección</label
-                >
-                <p class="text-slate-900 font-semibold text-lg mt-1">
-                  {{ selectedProperty.address }}
+                <h2
+                  class="text-3xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent">
+                  Detalles de la Propiedad
+                </h2>
+                <p class="text-slate-600 mt-2 text-lg">
+                  {{ getPropertyTypeLabel(selectedProperty.propertyType) }} -
+                  {{ getTransactionTypeLabel(selectedProperty.transactionType) }}
                 </p>
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label
-                    class="text-sm font-semibold text-slate-600 uppercase tracking-wide"
-                    >Barrio</label
-                  >
-                  <p class="text-slate-900 font-medium mt-1">
-                    {{ selectedProperty.neighborhood }}
-                  </p>
+              <button (click)="closeModal()"
+                class="text-slate-400 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 rounded-2xl p-3 transition-all duration-200 hover:bg-slate-100">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Modal Content - Scrollable -->
+          <div class="flex-1 overflow-y-auto p-8">
+            <!-- Property Images -->
+            <div *ngIf="selectedProperty.imageUrls && selectedProperty.imageUrls.length > 0" class="mb-10">
+              <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                <div
+                  class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
+                  </svg>
                 </div>
-                <div>
-                  <label
-                    class="text-sm font-semibold text-slate-600 uppercase tracking-wide"
-                    >Ciudad</label
-                  >
-                  <p class="text-slate-900 font-medium mt-1">
-                    {{ selectedProperty.city }}
-                  </p>
+                Galería de Imágenes
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div *ngFor="let imageUrl of selectedProperty.imageUrls"
+                  class="group aspect-video bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+                  <img [src]="imageUrl" [alt]="'Imagen de ' + selectedProperty.address"
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 cursor-pointer" />
                 </div>
+              </div>
+            </div>
+
+            <!-- Property Details in Two Columns -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              <!-- Left Column - Basic Information -->
+              <div class="space-y-8">
+                <!-- Location Information -->
+                <div
+                  class="bg-gradient-to-br from-slate-50/80 to-blue-50/80 backdrop-blur-sm rounded-2xl p-8 border border-white/50">
+                  <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                    <div
+                      class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
+                      <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      </svg>
+                    </div>
+                    Ubicación
+                  </h3>
+                  <div class="space-y-4">
+                    <div>
+                      <label class="text-sm font-semibold text-slate-600 uppercase tracking-wide">Dirección</label>
+                      <p class="text-slate-900 font-semibold text-lg mt-1">
+                        {{ selectedProperty.address }}
+                      </p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <label class="text-sm font-semibold text-slate-600 uppercase tracking-wide">Barrio</label>
+                        <p class="text-slate-900 font-medium mt-1">
+                          {{ selectedProperty.neighborhood }}
+                        </p>
+                      </div>
+                      <div>
+                        <label class="text-sm font-semibold text-slate-600 uppercase tracking-wide">Ciudad</label>
+                        <p class="text-slate-900 font-medium mt-1">
+                          {{ selectedProperty.city }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Property Details -->
+                <div
+                  class="bg-gradient-to-br from-slate-50/80 to-green-50/80 backdrop-blur-sm rounded-2xl p-8 border border-white/50">
+                  <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                    <div
+                      class="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mr-3">
+                      <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                        </path>
+                      </svg>
+                    </div>
+                    Características
+                  </h3>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center p-4 bg-white/70 backdrop-blur-sm rounded-xl shadow-sm">
+                      <svg class="w-6 h-6 mx-auto mb-2 text-blue-600" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2V7"></path>
+                      </svg>
+                      <p class="text-2xl font-bold text-slate-900">{{ selectedProperty.bedrooms }}</p>
+                      <p class="text-sm text-slate-600">Habitaciones</p>
+                    </div>
+                    <div class="text-center p-4 bg-white/70 backdrop-blur-sm rounded-xl shadow-sm">
+                      <svg class="w-6 h-6 mx-auto mb-2 text-blue-600" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
+                      </svg>
+                      <p class="text-2xl font-bold text-slate-900">{{ selectedProperty.bathrooms }}</p>
+                      <p class="text-sm text-slate-600">Baños</p>
+                    </div>
+                    <div *ngIf="selectedProperty.parkingSpaces"
+                      class="text-center p-4 bg-white/70 backdrop-blur-sm rounded-xl shadow-sm">
+                      <svg class="w-6 h-6 mx-auto mb-2 text-blue-600" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                        </path>
+                      </svg>
+                      <p class="text-2xl font-bold text-slate-900">{{ selectedProperty.parkingSpaces }}</p>
+                      <p class="text-sm text-slate-600">Parqueaderos</p>
+                    </div>
+                    <div *ngIf="selectedProperty.floor"
+                      class="text-center p-4 bg-white/70 backdrop-blur-sm rounded-xl shadow-sm">
+                      <svg class="w-6 h-6 mx-auto mb-2 text-blue-600" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                        </path>
+                      </svg>
+                      <p class="text-2xl font-bold text-slate-900">{{ selectedProperty.floor }}</p>
+                      <p class="text-sm text-slate-600">Piso</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Areas -->
+                <div
+                  class="bg-gradient-to-br from-slate-50/80 to-purple-50/80 backdrop-blur-sm rounded-2xl p-8 border border-white/50">
+                  <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                    <div
+                      class="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
+                      <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4">
+                        </path>
+                      </svg>
+                    </div>
+                    Áreas
+                  </h3>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-white/70 backdrop-blur-sm p-4 rounded-xl shadow-sm">
+                      <p class="text-sm font-semibold text-slate-600 mb-1">Área Total</p>
+                      <p class="text-xl font-bold text-slate-900">{{ selectedProperty.totalArea }} m²</p>
+                    </div>
+                    <div *ngIf="selectedProperty.builtArea"
+                      class="bg-white/70 backdrop-blur-sm p-4 rounded-xl shadow-sm">
+                      <p class="text-sm font-semibold text-slate-600 mb-1">Área Construida</p>
+                      <p class="text-xl font-bold text-slate-900">{{ selectedProperty.builtArea }} m²</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column - Price and Additional Info -->
+              <div class="space-y-8">
+                <!-- Price Information -->
+                <div
+                  class="bg-gradient-to-br from-green-50/80 to-emerald-50/80 backdrop-blur-sm rounded-2xl p-8 border border-green-200/50">
+                  <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                    <div
+                      class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center mr-3">
+                      <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1">
+                        </path>
+                      </svg>
+                    </div>
+                    Información Económica
+                  </h3>
+                  <div class="space-y-4">
+                    <div class="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-sm">
+                      <p class="text-sm font-semibold text-slate-600 mb-1">
+                        Precio de {{ getTransactionTypeLabel(selectedProperty.transactionType) }}
+                      </p>
+                      <p class="text-3xl font-bold text-green-600">{{ formatPrice(selectedProperty.price) }}</p>
+                    </div>
+                    <div *ngIf="selectedProperty.administrationFee"
+                      class="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-sm">
+                      <p class="text-sm font-semibold text-slate-600 mb-1">Administración</p>
+                      <p class="text-xl font-bold text-slate-900">{{ formatPrice(selectedProperty.administrationFee) }}
+                      </p>
+                      <p class="text-xs text-slate-500 mt-1">Mensual</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Property Status -->
+                <div
+                  class="bg-gradient-to-br from-slate-50/80 to-orange-50/80 backdrop-blur-sm rounded-2xl p-8 border border-white/50">
+                  <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                    <div
+                      class="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mr-3">
+                      <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                    </div>
+                    Estado
+                  </h3>
+                  <div class="flex items-center space-x-3">
+                    <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold"
+                      [ngClass]="selectedProperty.isActive !== false ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+                      <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <circle cx="10" cy="10" r="4"></circle>
+                      </svg>
+                      {{ selectedProperty.isActive !== false ? "Activa" : "Inactiva" }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Amenities -->
+                <div *ngIf="selectedProperty.amenities && selectedProperty.amenities.length > 0"
+                  class="bg-gradient-to-br from-slate-50/80 to-indigo-50/80 backdrop-blur-sm rounded-2xl p-8 border border-white/50">
+                  <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                    <div
+                      class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                      <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z">
+                        </path>
+                      </svg>
+                    </div>
+                    Comodidades
+                  </h3>
+                  <div class="flex flex-wrap gap-3">
+                    <span *ngFor="let amenity of selectedProperty.amenities"
+                      class="inline-flex items-center px-4 py-2 rounded-full text-sm bg-indigo-100 text-indigo-800 font-medium">
+                      {{ amenity }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Nearby Places -->
+                <div *ngIf="selectedProperty.nearbyPlaces && selectedProperty.nearbyPlaces.length > 0"
+                  class="bg-gradient-to-br from-slate-50/80 to-pink-50/80 backdrop-blur-sm rounded-2xl p-8 border border-white/50">
+                  <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                    <div
+                      class="w-8 h-8 bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg flex items-center justify-center mr-3">
+                      <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                        </path>
+                      </svg>
+                    </div>
+                    Lugares Cercanos
+                  </h3>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div *ngFor="let place of selectedProperty.nearbyPlaces"
+                      class="flex items-center space-x-3 p-3 bg-white/70 backdrop-blur-sm rounded-xl shadow-sm">
+                      <svg class="w-4 h-4 text-pink-600 flex-shrink-0" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3">
+                        </path>
+                      </svg>
+                      <span class="text-sm text-slate-700 font-medium">{{ place }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Metadata -->
+                <div
+                  class="bg-gradient-to-br from-slate-50/80 to-slate-100/80 backdrop-blur-sm rounded-2xl p-8 border border-white/50">
+                  <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                    <div
+                      class="w-8 h-8 bg-gradient-to-br from-slate-500 to-slate-600 rounded-lg flex items-center justify-center mr-3">
+                      <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                    </div>
+                    Información del Registro
+                  </h3>
+                  <div class="space-y-4">
+                    <div *ngIf="selectedProperty.createdAt"
+                      class="flex justify-between items-center py-3 border-b border-slate-200/50">
+                      <span class="text-sm font-semibold text-slate-600">Fecha de Creación</span>
+                      <span class="text-sm text-slate-900 font-medium">{{ formatDate(selectedProperty.createdAt)
+                        }}</span>
+                    </div>
+                    <div *ngIf="selectedProperty.updatedAt"
+                      class="flex justify-between items-center py-3 border-b border-slate-200/50">
+                      <span class="text-sm font-semibold text-slate-600">Última Actualización</span>
+                      <span class="text-sm text-slate-900 font-medium">{{ formatDate(selectedProperty.updatedAt)
+                        }}</span>
+                    </div>
+                    <div *ngIf="selectedProperty.id" class="flex justify-between items-center py-3">
+                      <span class="text-sm font-semibold text-slate-600">ID de Propiedad</span>
+                      <span class="text-xs text-slate-500 font-mono bg-slate-100/70 px-3 py-1 rounded-lg">{{
+                        selectedProperty.id }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description Section (Full Width) -->
+            <div *ngIf="selectedProperty.description"
+              class="mt-10 bg-gradient-to-br from-slate-50/80 to-yellow-50/80 backdrop-blur-sm rounded-2xl p-8 border border-white/50">
+              <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                <div
+                  class="w-8 h-8 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center mr-3">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                    </path>
+                  </svg>
+                </div>
+                Descripción
+              </h3>
+              <div class="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-sm">
+                <p class="text-slate-700 leading-relaxed whitespace-pre-wrap">{{ selectedProperty.description }}</p>
               </div>
             </div>
           </div>
 
-          <!-- Property Details Modal -->
-          <div
-            *ngIf="isModalOpen && selectedProperty"
-            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto"
-            (click)="onBackdropClick($event)"
-          >
-            <div
-              class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            >
-              <!-- Modal Header -->
-              <div
-                class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 rounded-t-2xl z-10"
-              >
-                <div class="flex items-center justify-between">
-                  <div>
-                    <h2 class="text-2xl font-bold text-gray-900">
-                      Detalles de la Propiedad
-                    </h2>
-                    <p class="text-gray-600 mt-1">
-                      {{
-                        getPropertyTypeLabel(selectedProperty.propertyType)
-                      }}
-                      -
-                      {{
-                        getTransactionTypeLabel(
-                          selectedProperty.transactionType
-                        )
-                      }}
-                    </p>
-                  </div>
-                  <button
-                    (click)="closeModal()"
-                    class="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-lg p-2"
-                  >
-                    <svg
-                      class="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
-                  </button>
+          <!-- Modal Footer - Fixed -->
+          <div class="bg-white/90 backdrop-blur-md border-t border-slate-200/50 px-8 py-6 rounded-b-3xl flex-shrink-0">
+            <div class="flex flex-col sm:flex-row gap-4 sm:justify-end">
+              <button (click)="closeModal()"
+                class="px-6 py-3 text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-2xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
+                Cerrar
+              </button>
+              <button (click)="editProperty(selectedProperty.id!)"
+                class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-2xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg">
+                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                  </path>
+                </svg>
+                Editar Propiedad
+              </button>
+              <button (click)="deleteProperty(selectedProperty.id!)" [disabled]="isDeleting"
+                class="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-red-400 disabled:to-red-400 text-white rounded-2xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:cursor-not-allowed shadow-lg">
+                <svg *ngIf="!isDeleting" class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                  </path>
+                </svg>
+                <div *ngIf="isDeleting" class="animate-spin rounded-full h-4 w-4 border-b-2 border-white inline mr-2">
                 </div>
-              </div>
-
-              <!-- Modal Content -->
-              <div class="p-6">
-                <!-- Property Images -->
-                <div
-                  *ngIf="
-                    selectedProperty.imageUrls &&
-                    selectedProperty.imageUrls.length > 0
-                  "
-                  class="mb-8"
-                >
-                  <h3
-                    class="text-lg font-semibold text-gray-900 mb-4 flex items-center"
-                  >
-                    <svg
-                      class="w-5 h-5 mr-2 text-indigo-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                      ></path>
-                    </svg>
-                    Imágenes
-                  </h3>
-                  <div
-                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-                  >
-                    <div
-                      *ngFor="let imageUrl of selectedProperty.imageUrls"
-                      class="aspect-video bg-gray-100 rounded-lg overflow-hidden"
-                    >
-                      <img
-                        [src]="imageUrl"
-                        [alt]="'Imagen de ' + selectedProperty.address"
-                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Property Details in Two Columns -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <!-- Left Column - Basic Information -->
-                  <div class="space-y-6">
-                    <!-- Location Information -->
-                    <div class="bg-gray-50 rounded-xl p-6">
-                      <h3
-                        class="text-lg font-semibold text-gray-900 mb-4 flex items-center"
-                      >
-                        <svg
-                          class="w-5 h-5 mr-2 text-blue-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                          ></path>
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                          ></path>
-                        </svg>
-                        Ubicación
-                      </h3>
-                      <div class="space-y-3">
-                        <div>
-                          <label class="text-sm font-medium text-gray-600"
-                            >Dirección</label
-                          >
-                          <p class="text-gray-900 font-medium">
-                            {{ selectedProperty.address }}
-                          </p>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div>
-                            <label class="text-sm font-medium text-gray-600"
-                              >Barrio</label
-                            >
-                            <p class="text-gray-900">
-                              {{ selectedProperty.neighborhood }}
-                            </p>
-                          </div>
-                          <div>
-                            <label class="text-sm font-medium text-gray-600"
-                              >Ciudad</label
-                            >
-                            <p class="text-gray-900">
-                              {{ selectedProperty.city }}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Property Details -->
-                    <div class="bg-gray-50 rounded-xl p-6">
-                      <h3
-                        class="text-lg font-semibold text-gray-900 mb-4 flex items-center"
-                      >
-                        <svg
-                          class="w-5 h-5 mr-2 text-green-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                          ></path>
-                        </svg>
-                        Características
-                      </h3>
-                      <div class="grid grid-cols-2 gap-4">
-                        <div class="text-center p-3 bg-white rounded-lg">
-                          <svg
-                            class="w-6 h-6 mx-auto mb-2 text-blue-600"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2V7"
-                            ></path>
-                          </svg>
-                          <p class="text-2xl font-bold text-gray-900">
-                            {{ selectedProperty.bedrooms }}
-                          </p>
-                          <p class="text-sm text-gray-600">Habitaciones</p>
-                        </div>
-                        <div class="text-center p-3 bg-white rounded-lg">
-                          <svg
-                            class="w-6 h-6 mx-auto mb-2 text-blue-600"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"
-                            ></path>
-                          </svg>
-                          <p class="text-2xl font-bold text-gray-900">
-                            {{ selectedProperty.bathrooms }}
-                          </p>
-                          <p class="text-sm text-gray-600">Baños</p>
-                        </div>
-                        <div
-                          *ngIf="selectedProperty.parkingSpaces"
-                          class="text-center p-3 bg-white rounded-lg"
-                        >
-                          <svg
-                            class="w-6 h-6 mx-auto mb-2 text-blue-600"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            ></path>
-                          </svg>
-                          <p class="text-2xl font-bold text-gray-900">
-                            {{ selectedProperty.parkingSpaces }}
-                          </p>
-                          <p class="text-sm text-gray-600">Parqueaderos</p>
-                        </div>
-                        <div
-                          *ngIf="selectedProperty.floor"
-                          class="text-center p-3 bg-white rounded-lg"
-                        >
-                          <svg
-                            class="w-6 h-6 mx-auto mb-2 text-blue-600"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                            ></path>
-                          </svg>
-                          <p class="text-2xl font-bold text-gray-900">
-                            {{ selectedProperty.floor }}
-                          </p>
-                          <p class="text-sm text-gray-600">Piso</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Areas -->
-                    <div class="bg-gray-50 rounded-xl p-6">
-                      <h3
-                        class="text-lg font-semibold text-gray-900 mb-4 flex items-center"
-                      >
-                        <svg
-                          class="w-5 h-5 mr-2 text-purple-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
-                          ></path>
-                        </svg>
-                        Áreas
-                      </h3>
-                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="bg-white p-4 rounded-lg">
-                          <p class="text-sm font-medium text-gray-600 mb-1">
-                            Área Total
-                          </p>
-                          <p class="text-xl font-bold text-gray-900">
-                            {{ selectedProperty.totalArea }} m²
-                          </p>
-                        </div>
-                        <div
-                          *ngIf="selectedProperty.builtArea"
-                          class="bg-white p-4 rounded-lg"
-                        >
-                          <p class="text-sm font-medium text-gray-600 mb-1">
-                            Área Construida
-                          </p>
-                          <p class="text-xl font-bold text-gray-900">
-                            {{ selectedProperty.builtArea }} m²
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Right Column - Price and Additional Info -->
-                  <div class="space-y-6">
-                    <!-- Price Information -->
-                    <div
-                      class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200"
-                    >
-                      <h3
-                        class="text-lg font-semibold text-gray-900 mb-4 flex items-center"
-                      >
-                        <svg
-                          class="w-5 h-5 mr-2 text-green-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
-                          ></path>
-                        </svg>
-                        Información Económica
-                      </h3>
-                      <div class="space-y-4">
-                        <div class="bg-white p-4 rounded-lg shadow-sm">
-                          <p class="text-sm font-medium text-gray-600 mb-1">
-                            Precio de
-                            {{
-                              getTransactionTypeLabel(
-                                selectedProperty.transactionType
-                              )
-                            }}
-                          </p>
-                          <p class="text-3xl font-bold text-green-600">
-                            {{ formatPrice(selectedProperty.price) }}
-                          </p>
-                        </div>
-                        <div
-                          *ngIf="selectedProperty.administrationFee"
-                          class="bg-white p-4 rounded-lg shadow-sm"
-                        >
-                          <p class="text-sm font-medium text-gray-600 mb-1">
-                            Administración
-                          </p>
-                          <p class="text-xl font-bold text-gray-900">
-                            {{
-                              formatPrice(selectedProperty.administrationFee)
-                            }}
-                          </p>
-                          <p class="text-xs text-gray-500 mt-1">Mensual</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Property Status -->
-                    <div class="bg-gray-50 rounded-xl p-6">
-                      <h3
-                        class="text-lg font-semibold text-gray-900 mb-4 flex items-center"
-                      >
-                        <svg
-                          class="w-5 h-5 mr-2 text-orange-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                          ></path>
-                        </svg>
-                        Estado
-                      </h3>
-                      <div class="flex items-center space-x-3">
-                        <span
-                          class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
-                          [ngClass]="
-                            selectedProperty.isActive !== false
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-red-100 text-red-800'
-                          "
-                        >
-                          <svg
-                            class="w-4 h-4 mr-1"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <circle cx="10" cy="10" r="4"></circle>
-                          </svg>
-                          {{
-                            selectedProperty.isActive !== false
-                              ? "Activa"
-                              : "Inactiva"
-                          }}
-                        </span>
-                      </div>
-                    </div>
-
-                    <!-- Amenities -->
-                    <div
-                      *ngIf="
-                        selectedProperty.amenities &&
-                        selectedProperty.amenities.length > 0
-                      "
-                      class="bg-gray-50 rounded-xl p-6"
-                    >
-                      <h3
-                        class="text-lg font-semibold text-gray-900 mb-4 flex items-center"
-                      >
-                        <svg
-                          class="w-5 h-5 mr-2 text-indigo-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                          ></path>
-                        </svg>
-                        Comodidades
-                      </h3>
-                      <div class="flex flex-wrap gap-2">
-                        <span
-                          *ngFor="let amenity of selectedProperty.amenities"
-                          class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-indigo-100 text-indigo-800"
-                        >
-                          {{ amenity }}
-                        </span>
-                      </div>
-                    </div>
-
-                    <!-- Nearby Places -->
-                    <div
-                      *ngIf="
-                        selectedProperty.nearbyPlaces &&
-                        selectedProperty.nearbyPlaces.length > 0
-                      "
-                      class="bg-gray-50 rounded-xl p-6"
-                    >
-                      <h3
-                        class="text-lg font-semibold text-gray-900 mb-4 flex items-center"
-                      >
-                        <svg
-                          class="w-5 h-5 mr-2 text-pink-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                          ></path>
-                        </svg>
-                        Lugares Cercanos
-                      </h3>
-                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <div
-                          *ngFor="let place of selectedProperty.nearbyPlaces"
-                          class="flex items-center space-x-2 p-2 bg-white rounded-lg"
-                        >
-                          <svg
-                            class="w-4 h-4 text-pink-600 flex-shrink-0"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3"
-                            ></path>
-                          </svg>
-                          <span class="text-sm text-gray-700">{{ place }}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Metadata -->
-                    <div class="bg-gray-50 rounded-xl p-6">
-                      <h3
-                        class="text-lg font-semibold text-gray-900 mb-4 flex items-center"
-                      >
-                        <svg
-                          class="w-5 h-5 mr-2 text-gray-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                          ></path>
-                        </svg>
-                        Información del Registro
-                      </h3>
-                      <div class="space-y-3">
-                        <div
-                          *ngIf="selectedProperty.createdAt"
-                          class="flex justify-between items-center py-2 border-b border-gray-200"
-                        >
-                          <span class="text-sm font-medium text-gray-600"
-                            >Fecha de Creación</span
-                          >
-                          <span class="text-sm text-gray-900">{{
-                            formatDate(selectedProperty.createdAt)
-                          }}</span>
-                        </div>
-                        <div
-                          *ngIf="selectedProperty.updatedAt"
-                          class="flex justify-between items-center py-2 border-b border-gray-200"
-                        >
-                          <span class="text-sm font-medium text-gray-600"
-                            >Última Actualización</span
-                          >
-                          <span class="text-sm text-gray-900">{{
-                            formatDate(selectedProperty.updatedAt)
-                          }}</span>
-                        </div>
-                        <div
-                          *ngIf="selectedProperty.id"
-                          class="flex justify-between items-center py-2"
-                        >
-                          <span class="text-sm font-medium text-gray-600"
-                            >ID de Propiedad</span
-                          >
-                          <span
-                            class="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded"
-                            >{{ selectedProperty.id }}</span
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Description Section (Full Width) -->
-                <div
-                  *ngIf="selectedProperty.description"
-                  class="mt-8 bg-gray-50 rounded-xl p-6"
-                >
-                  <h3
-                    class="text-lg font-semibold text-gray-900 mb-4 flex items-center"
-                  >
-                    <svg
-                      class="w-5 h-5 mr-2 text-yellow-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                      ></path>
-                    </svg>
-                    Descripción
-                  </h3>
-                  <div class="bg-white p-4 rounded-lg">
-                    <p
-                      class="text-gray-700 leading-relaxed whitespace-pre-wrap"
-                    >
-                      {{ selectedProperty.description }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Modal Footer -->
-              <div
-                class="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 rounded-b-2xl"
-              >
-                <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
-                  <button
-                    (click)="closeModal()"
-                    class="px-6 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                  >
-                    Cerrar
-                  </button>
-                  <button
-                    (click)="editProperty(selectedProperty.id!)"
-                    class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  >
-                    <svg
-                      class="w-4 h-4 inline mr-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                      ></path>
-                    </svg>
-                    Editar Propiedad
-                  </button>
-                  <button
-                    (click)="deleteProperty(selectedProperty.id!)"
-                    [disabled]="isDeleting"
-                    class="px-6 py-2 bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:cursor-not-allowed"
-                  >
-                    <svg
-                      *ngIf="!isDeleting"
-                      class="w-4 h-4 inline mr-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      ></path>
-                    </svg>
-                    <div
-                      *ngIf="isDeleting"
-                      class="animate-spin rounded-full h-4 w-4 border-b-2 border-white inline mr-2"
-                    ></div>
-                    {{ isDeleting ? "Eliminando..." : "Eliminar" }}
-                  </button>
-                </div>
-              </div>
+                {{ isDeleting ? "Eliminando..." : "Eliminar" }}
+              </button>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>

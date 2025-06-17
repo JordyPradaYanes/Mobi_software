@@ -169,7 +169,7 @@ Para crear una compilación de producción de la aplicación:
     ```
     Los artefactos de la compilación se almacenarán en el directorio `dist/mobi/browser`.
 
-## Contribuciones / Mejoras Futuras (Opcional)
+## Contribuciones / Mejoras Futuras
 
 ¡Aceptamos contribuciones! Aquí hay algunas ideas para futuras mejoras:
 
