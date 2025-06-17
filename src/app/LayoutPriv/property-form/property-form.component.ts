@@ -89,12 +89,6 @@ export class PropertyFormComponent implements OnInit, OnDestroy {
     this.initializeComponent()
   }
 
-  ngOnDestroy(): void {
-    console.log("🔥 ngOnDestroy ejecutado")
-    this.destroy$.next()
-    this.destroy$.complete()
-  }
-
   private checkEditMode(): void {
     // Verificar si hay un ID en la ruta para modo edición
     this.route.params.subscribe((params) => {
@@ -572,5 +566,11 @@ export class PropertyFormComponent implements OnInit, OnDestroy {
   // Método para cancelar edición y volver a la gestión
   cancelEdit(): void {
     this.router.navigate(["/property-management"])
+  }
+
+  ngOnDestroy(): void {
+    console.log("🔥 ngOnDestroy ejecutado")
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }
