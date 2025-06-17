@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core"
 import { Firestore, doc, setDoc, getDoc, updateDoc } from "@angular/fire/firestore"
-
 export interface UserProfile {
   uid: string
   email: string
