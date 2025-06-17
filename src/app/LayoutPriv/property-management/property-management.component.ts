@@ -96,12 +96,12 @@ export class PropertyManagementComponent implements OnInit {
   }
 
   addNewProperty(): void {
-    this.router.navigate(['/property-form']);
+    this.router.navigate(['property-form']);
   }
 
   editProperty(propertyId: string | undefined): void {
     if (propertyId !== undefined && propertyId !== null) {
-      this.router.navigate(['/property-form', propertyId.toString()]);
+      this.router.navigate(['property-form', propertyId.toString()]);
     } else {
       console.error('Property ID is undefined or null. Cannot navigate to edit property.');
     }

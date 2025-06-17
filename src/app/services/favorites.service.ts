@@ -5,12 +5,11 @@ import {
   setDoc, 
   deleteDoc, 
   collection, 
-  getDocs,
   collectionData,
-  query,
-  Timestamp
+  Timestamp,
+  docData
 } from '@angular/fire/firestore';
-import { Observable, from, of } from 'rxjs';
+import { Observable, from, of, combineLatest } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { PropertyService } from './property.service';
 import { Property } from '../interfaces/property.interface';
@@ -58,13 +57,16 @@ export class FavoritesService {
     );
   }
 
-  // Obtener IDs de propiedades favoritas de un usuario
+  // Obtener IDs de propiedades favoritas de un usuario (en tiempo real)
   getFavoritePropertyIds(userId: string): Observable<string[]> {
     const favoritesCollectionRef = collection(this.firestore, `users/${userId}/favorites`);
     
     return collectionData(favoritesCollectionRef, { idField: 'id' }).pipe(
       map((favorites: any[]) => {
-        return favorites.map(fav => fav.propertyId).filter(Boolean);
+        console.log('Raw favorites data:', favorites);
+        return favorites
+          .map(fav => fav.propertyId)
+          .filter(id => id && id.trim() !== '');
       }),
       catchError(error => {
         console.error('Error fetching favorite property IDs:', error);
@@ -77,10 +79,28 @@ export class FavoritesService {
   getFavoriteProperties(userId: string): Observable<Property[]> {
     return this.getFavoritePropertyIds(userId).pipe(
       switchMap(propertyIds => {
+        console.log('Property IDs to fetch:', propertyIds);
+        
         if (propertyIds.length === 0) {
           return of([]);
         }
-        return this.propertyService.getPropertiesByIds(propertyIds);
+        
+        // Obtener cada propiedad individualmente
+        const propertyObservables = propertyIds.map(id => 
+          this.propertyService.getPropertyById(id).pipe(
+            catchError(error => {
+              console.error(`Error fetching property ${id}:`, error);
+              return of(null);
+            })
+          )
+        );
+        
+        return combineLatest(propertyObservables).pipe(
+          map(properties => 
+            properties
+              .filter(property => property !== null) as Property[]
+          )
+        );
       }),
       catchError(error => {
         console.error('Error fetching favorite properties:', error);
@@ -91,8 +111,10 @@ export class FavoritesService {
 
   // Verificar si una propiedad está en favoritos
   isFavorite(userId: string, propertyId: string): Observable<boolean> {
-    return this.getFavoritePropertyIds(userId).pipe(
-      map(favoriteIds => favoriteIds.includes(propertyId)),
+    const favoriteDocRef = doc(this.firestore, `users/${userId}/favorites/${propertyId}`);
+    
+    return docData(favoriteDocRef).pipe(
+      map(doc => !!doc),
       catchError(error => {
         console.error('Error checking if property is favorite:', error);
         return of(false);
