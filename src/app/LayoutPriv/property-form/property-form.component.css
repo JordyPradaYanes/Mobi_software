@@ -1,107 +1,104 @@
-.property-form-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Estilos adicionales para el formulario de propiedades */
+
+/* Animación suave para los inputs en focus */
+.form-input-focus {
+  transition: all 0.2s ease-in-out;
 }
 
-.property-form-container h2 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 1.5rem;
+/* Efecto de hover en botones */
+.btn-hover-scale:hover {
+  transform: scale(1.02);
 }
 
-.form-group {
-  margin-bottom: 1rem;
+/* Animación personalizada para el spinner */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #555;
+.custom-spin {
+  animation: spin 1s linear infinite;
 }
 
-.form-control {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 1rem;
+/* Efectos de entrada suaves */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.form-control:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-textarea.form-control {
-  resize: vertical;
-  min-height: 80px;
+/* Estilos para campos con error */
+.input-error {
+  animation: shake 0.3s ease-in-out;
 }
 
-.text-danger {
-  color: #dc3545;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 
-.btn {
-  display: inline-block;
-  font-weight: 400;
-  text-align: center;
-  vertical-align: middle;
-  user-select: none;
-  border: 1px solid transparent;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+/* Mejora visual para números grandes en el campo precio */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
 }
 
-.btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #004085;
+/* Estilos responsivos adicionales */
+@media (max-width: 640px) {
+  .property-form-container {
+    padding: 1rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
 
-.btn:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
+/* Efecto de glassmorphism para el card principal */
+.glass-effect {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.alert {
-  padding: 0.75rem 1.25rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid transparent;
-  border-radius: 0.25rem;
+/* Sombras personalizadas */
+.custom-shadow {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
-.alert-info {
-  color: #0c5460;
-  background-color: #d1ecf1;
-  border-color: #bee5eb;
-}
-
-.alert-success {
-  color: #155724;
-  background-color: #d4edda;
-  border-color: #c3e6cb;
-}
-
-.alert-danger {
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
+.custom-shadow-lg {
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
 }
