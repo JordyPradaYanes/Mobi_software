@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   successMessage = ""
   registrationSuccess = false
   redirecting = false
-  redirectCountdown = 3
+  redirectCountdown = 1
   showPassword = false
   showConfirmPassword = false
   

@@ -23,19 +23,21 @@ class MockPropertyService {
 }
 
 const mockProperty: Property = {
-  id: 1,
+  id: '1',
   address: '123 Main St',
   price: 200000,
   bedrooms: 3,
   bathrooms: 2,
   userId: 'user1',
   description: 'A nice place',
-  type: 'House',
-  status: 'For Sale',
-  features: [],
   imageUrls: [],
   createdAt: new Date(),
-  updatedAt: new Date()
+  updatedAt: new Date(),
+  propertyType: 'casa',
+  transactionType: 'venta',
+  neighborhood: '',
+  city: '',
+  totalArea: 0
 };
 
 describe('FavoritesService', () => {

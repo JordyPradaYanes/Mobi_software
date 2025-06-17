@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   successMessage = ""
   loginSuccess = false
   redirecting = false
-  redirectCountdown = 3
+  redirectCountdown = 1
 
   // Estados de carga
   currentLoadingMessage = ""
