@@ -11,6 +11,13 @@ import { Subscription } from 'rxjs';
 import { MainComponent } from "../../main/main.component";
 import { NavbarComponent } from "../../ComponentesEstructurales/navbar/navbar.component";
 
+interface DashboardStats {
+  totalProperties: number;
+  favoriteProperties: number;
+  activeListings: number;
+  viewsThisMonth: number;
+}
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -22,57 +29,108 @@ export class DashboardComponent implements OnInit, OnDestroy {
   
   currentUser: User | null = null;
   private userSubscription?: Subscription;
+  isLoadingStats = true;
+  
+  // Estadísticas del dashboard
+  dashboardStats: DashboardStats = {
+    totalProperties: 0,
+    favoriteProperties: 0,
+    activeListings: 0,
+    viewsThisMonth: 0
+  };
   
   constructor(
     private router: Router,
     private authService: AuthService,
-    private propertyService: PropertyService, // Added
-    private favoritesService: FavoritesService // Added
+    private propertyService: PropertyService,
+    private favoritesService: FavoritesService
   ) {}
 
   ngOnInit() {
     this.userSubscription = this.authService.user$.subscribe(user => {
       this.currentUser = user;
-      if (user && user.uid) { // Ensure user and user.uid exist
+      if (user && user.uid) {
         this.loadDashboardStats(user.uid);
       } else if (!user) {
         this.router.navigate(['/login']);
-        // Reset stats if user logs out or no user
-        this.dashboardStats = {
-          totalProperties: 0,
-          favoriteProperties: 0,
-          activeListings: 0,
-          viewsThisMonth: 0
-        };
+        this.resetStats();
       }
     });
   }
 
   private loadDashboardStats(userId: string): void {
-    const userProperties$ = this.propertyService.getPropertiesByUserId(userId).pipe(
+    this.isLoadingStats = true;
+    
+    // Crear observables para cada estadística
+    const userPropertiesCount$ = this.propertyService.getUserPropertiesCount(userId).pipe(
       catchError(err => {
-        console.error('Error fetching user properties:', err);
-        return of([]); // Return empty array on error
+        console.error('Error fetching user properties count:', err);
+        return of(0);
       })
     );
 
-    const favoriteProperties$ = this.favoritesService.getFavoriteProperties(userId).pipe(
+    const favoritePropertiesCount$ = this.favoritesService.getFavoriteCount(userId).pipe(
       catchError(err => {
-        console.error('Error fetching favorite properties:', err);
-        return of([]); // Return empty array on error
+        console.error('Error fetching favorite properties count:', err);
+        return of(0);
       })
     );
 
+    // Para propiedades activas, obtenemos las propiedades del usuario y filtramos las activas
+    const activeListingsCount$ = this.propertyService.getPropertiesByUserId(userId).pipe(
+      map(properties => properties.filter(prop => prop.isActive !== false).length),
+      catchError(err => {
+        console.error('Error fetching active listings count:', err);
+        return of(0);
+      })
+    );
+
+    // Las vistas las mantenemos en 0 por ahora como estaba planificado
+    const viewsThisMonth$ = of(0);
+
+    // Opcional: Total de propiedades en el sistema (no solo del usuario)
+    const totalPropertiesInSystem$ = this.propertyService.getTotalPropertiesCount().pipe(
+      catchError(err => {
+        console.error('Error fetching total properties count:', err);
+        return of(0);
+      })
+    );
+
+    // Combinar todas las consultas
     forkJoin({
-      userProperties: userProperties$,
-      favoriteProperties: favoriteProperties$
-    }).subscribe(results => {
-      // Assuming all user's properties are active for now
-      this.dashboardStats.totalProperties = results.userProperties.length;
-      this.dashboardStats.activeListings = results.userProperties.length;
-      this.dashboardStats.favoriteProperties = results.favoriteProperties.length;
-      this.dashboardStats.viewsThisMonth = 0; // Static value as per plan
+      userProperties: userPropertiesCount$,
+      favoriteProperties: favoritePropertiesCount$,
+      activeListings: activeListingsCount$,
+      viewsThisMonth: viewsThisMonth$,
+      totalPropertiesInSystem: totalPropertiesInSystem$
+    }).subscribe({
+      next: (results) => {
+        this.dashboardStats = {
+          // Puedes elegir mostrar las propiedades del usuario o del sistema completo
+          totalProperties: results.userProperties, // Cambia a results.totalPropertiesInSystem si quieres el total del sistema
+          favoriteProperties: results.favoriteProperties,
+          activeListings: results.activeListings,
+          viewsThisMonth: results.viewsThisMonth
+        };
+        this.isLoadingStats = false;
+        console.log('📊 Dashboard stats loaded:', this.dashboardStats);
+      },
+      error: (error) => {
+        console.error('Error loading dashboard stats:', error);
+        this.resetStats();
+        this.isLoadingStats = false;
+      }
     });
+  }
+
+  private resetStats(): void {
+    this.dashboardStats = {
+      totalProperties: 0,
+      favoriteProperties: 0,
+      activeListings: 0,
+      viewsThisMonth: 0
+    };
+    this.isLoadingStats = false;
   }
 
   ngOnDestroy() {
@@ -91,14 +149,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       uid: this.currentUser?.uid || ''
     };
   }
-
-  // Estadísticas del dashboard
-  dashboardStats = {
-    totalProperties: 0,
-    favoriteProperties: 0,
-    activeListings: 0,
-    viewsThisMonth: 0 // As per plan, set to 0
-  };
 
   // Navegación a diferentes secciones
   navigateToSection(route: string) {
@@ -129,6 +179,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       // El AuthService ya maneja la redirección
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
+    }
+  }
+
+  // Función para refrescar las estadísticas manualmente
+  refreshStats() {
+    if (this.currentUser?.uid) {
+      this.loadDashboardStats(this.currentUser.uid);
     }
   }
 }

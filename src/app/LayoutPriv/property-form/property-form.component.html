@@ -147,7 +147,7 @@
                   formControlName="address" 
                   class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                   [class.border-red-500]="formControls['address'].touched && formControls['address'].errors"
-                  placeholder="Ej: Carrera 15 #123-45, Barrio Chapinero, Bogotá">
+                  placeholder="Ej: Carrera 15 #123-45, Maravel, Ocaña">
                 <svg class="absolute left-3 top-3 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -174,7 +174,7 @@
                   formControlName="neighborhood" 
                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                   [class.border-red-500]="formControls['neighborhood'].touched && formControls['neighborhood'].errors"
-                  placeholder="Ej: Chapinero">
+                  placeholder="Ej: Maravel">
                 <div *ngIf="formControls['neighborhood'].touched && formControls['neighborhood'].errors?.['required']" 
                      class="mt-2 text-sm text-red-600 flex items-center">
                   <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -194,7 +194,7 @@
                   formControlName="city" 
                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                   [class.border-red-500]="formControls['city'].touched && formControls['city'].errors"
-                  placeholder="Ej: Bogotá">
+                  placeholder="Ej: Ocaña">
                 <div *ngIf="formControls['city'].touched && formControls['city'].errors?.['required']" 
                      class="mt-2 text-sm text-red-600 flex items-center">
                   <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
