@@ -1,1 +1,77 @@
-<p>property-form works!</p>
+<div class="property-form-container">
+  <h2>{{ successMessage ? 'Success!' : 'Add New Property' }}</h2>
+
+  <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+    <!-- Address -->
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input type="text" id="address" formControlName="address" class="form-control">
+      <div *ngIf="formControls['address'].touched && formControls['address'].errors?.['required']" class="text-danger">
+        Address is required.
+      </div>
+    </div>
+
+    <!-- Price -->
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" id="price" formControlName="price" class="form-control">
+      <div *ngIf="formControls['price'].touched && formControls['price'].errors?.['required']" class="text-danger">
+        Price is required.
+      </div>
+      <div *ngIf="formControls['price'].touched && formControls['price'].errors?.['min']" class="text-danger">
+        Price must be greater than 0.
+      </div>
+    </div>
+
+    <!-- Bedrooms -->
+    <div class="form-group">
+      <label for="bedrooms">Bedrooms</label>
+      <input type="number" id="bedrooms" formControlName="bedrooms" class="form-control">
+      <div *ngIf="formControls['bedrooms'].touched && formControls['bedrooms'].errors?.['required']" class="text-danger">
+        Number of bedrooms is required.
+      </div>
+      <div *ngIf="formControls['bedrooms'].touched && formControls['bedrooms'].errors?.['min']" class="text-danger">
+        Number of bedrooms cannot be negative.
+      </div>
+    </div>
+
+    <!-- Bathrooms -->
+    <div class="form-group">
+      <label for="bathrooms">Bathrooms</label>
+      <input type="number" id="bathrooms" formControlName="bathrooms" class="form-control">
+      <div *ngIf="formControls['bathrooms'].touched && formControls['bathrooms'].errors?.['required']" class="text-danger">
+        Number of bathrooms is required.
+      </div>
+      <div *ngIf="formControls['bathrooms'].touched && formControls['bathrooms'].errors?.['min']" class="text-danger">
+        Number of bathrooms cannot be negative.
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
+      <div *ngIf="formControls['description'].touched && formControls['description'].errors?.['required']" class="text-danger">
+        Description is required.
+      </div>
+    </div>
+
+    <!-- Image URLs (Simplified as text input for now) -->
+    <!-- For a real application, a file upload or a more complex FormArray input would be better -->
+    <!-- <div class="form-group">
+      <label for="imageUrl">Image URL (Optional)</label>
+      <input type="url" id="imageUrl" formControlName="imageUrls" class="form-control">
+      <small>For multiple images, this needs to be enhanced (e.g., FormArray with multiple inputs or file uploads).</small>
+    </div> -->
+
+    <!-- User Feedback -->
+    <div *ngIf="isLoading" class="alert alert-info">Submitting property...</div>
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+      {{ isLoading ? 'Submitting...' : 'Add Property' }}
+    </button>
+  </form>
+</div>
