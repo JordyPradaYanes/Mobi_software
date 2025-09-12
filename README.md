@@ -1,5 +1,19 @@
 # Mobi
 
+## Prompt para Entender el Proyecto
+
+**Mobi** es una aplicación web creada con **Angular** y **Firebase** que funciona como una plataforma inmobiliaria. El objetivo principal es permitir a los usuarios **buscar, publicar y gestionar propiedades** (tanto para alquiler como para venta).
+
+La funcionalidad clave incluye:
+- **Autenticación de usuarios**: Registro e inicio de sesión.
+- **Gestión de propiedades**: Los usuarios pueden crear, ver, actualizar y eliminar sus propios anuncios de propiedades.
+- **Favoritos**: Los usuarios pueden guardar una lista de sus propiedades preferidas.
+- **Perfiles de usuario**: Cada usuario tiene su propio perfil.
+
+Esencialmente, es un mercado inmobiliario digital donde los usuarios pueden encontrar su próximo hogar o listar una propiedad para otros.
+
+---
+
 ## Descripción
 
 Mobi es una plataforma inmobiliaria integral diseñada para buscar, publicar y gestionar alquileres y ventas de propiedades. Permite a los usuarios registrarse e iniciar sesión en sus cuentas, publicar nuevas propiedades con descripciones detalladas e imágenes, marcar propiedades como favoritas para un fácil acceso y gestionar eficientemente sus propios listados. La plataforma tiene como objetivo proporcionar una experiencia fluida y fácil de usar tanto para quienes buscan propiedades como para quienes las publican.
