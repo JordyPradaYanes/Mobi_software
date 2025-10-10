@@ -9,7 +9,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCqEM2OTHMStealQiIOg15MDuIW0XeAbj8",
+  apiKey: "",
   authDomain: "mobiis-ab4b2.firebaseapp.com",
   projectId: "mobiis-ab4b2",
   storageBucket: "mobiis-ab4b2.firebasestorage.app",
